@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>סדנת מותססים – חמוצים מותססים בבית</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&family=Varela+Round&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      /* צבעים */
+      --primary-600: #2e7d32;
+      --primary-700: #1b5e20;
+      --accent-500:  #ff8f00;
+      --accent-600:  #ff6f00;
+      --bg: #fafafa;
+      --radius: 18px;
+      --shadow: 0 6px 22px rgba(0, 0, 0, .08);
+      --max-w: 1160px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Heebo', sans-serif;
+      background: var(--bg);
+      color: #212121;
+      overflow-x: hidden;
+    }
+
+    /* ----------  ניווט עליון  ---------- */
+    .navbar {
+      position: fixed;
+      top: 0; inset-inline: 0;
+      background: #fff;
+      box-shadow: var(--shadow);
+      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .75rem 6%;
+    }
+    .navbar .brand {
+      font-family: 'Varela Round', sans-serif;
+      font-weight: 700;
+      font-size: 1.35rem;
+      color: var(--primary-700);
+    }
+    .navbar a.cta {
+      background: linear-gradient(135deg, var(--accent-500), var(--accent-600));
+      color: #fff;
+      padding: .6rem 1.6rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-weight: 500;
+      transition: transform .2s;
+    }
+    .navbar a.cta:hover { transform: scale(1.05); }
+
+    /* ---------- Hero ---------- */
+    header.hero {
+      background: url('images/workshop1.jpeg') center/cover no-repeat;
+      height: 440px;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      position: relative;
+      margin-top: 56px; /* navbar height */
+    }
+    header.hero::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,.30);
+    }
+    header.hero h1 {
+      position: relative;
+      font-size: 3rem;
+      color: #fff;
+      line-height: 1.2;
+      margin: 0;
+      font-weight: 700;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    }
+
+    /* ----------  תוכן כללי  ---------- */
+    .container { width: 90%; max-width: var(--max-w); margin: auto; padding: 3.5rem 0; }
+    section { margin-bottom: 4rem; }
+    h2.section-title {
+      margin-top: 0;
+      color: var(--primary-600);
+      font-size: 2rem;
+      position: relative;
+    }
+    h2.section-title::after {
+      content: "";
+      position: absolute; bottom: -6px; right: 0;
+      width: 120px; height: 4px;
+      background: linear-gradient(135deg, var(--accent-500), var(--accent-600));
+      border-radius: 2px;
+    }
+
+    /* ----------  פירוט הסדנה  ---------- */
+    .about {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      box-shadow: var(--shadow);
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+
+    /* ---------- Highlights ---------- */
+    .highlights ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.25rem; }
+    .highlights li {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 1.2rem 1.5rem;
+      box-shadow: var(--shadow);
+      position: relative;
+      padding-inline-end: 3rem;
+      overflow: hidden;
+    }
+    .highlights li::before {
+      content: "✔";
+      position: absolute; top: 50%; transform: translateY(-50%);
+      inset-inline-end: 1.2rem;
+      color: var(--accent-600);
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    /* ---------- תאריכים ---------- */
+    .dates ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .75rem; }
+    .dates li {
+      background: var(--primary-600);
+      color: #fff;
+      padding: .55rem 1rem;
+      border-radius: 9999px;
+      font-weight: 500;
+      box-shadow: 0 3px 8px rgba(0,0,0,.15);
+    }
+
+    /* ---------- Pricing ---------- */
+    .pricing { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); }
+    .price-card {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      border: 3px solid transparent;
+      background-clip: padding-box, border-box;
+      background-origin: padding-box, border-box;
+      background-image: linear-gradient(#fff, #fff), linear-gradient(135deg,var(--accent-500), var(--primary-600));
+      transition: transform .25s;
+    }
+    .price-card:hover { transform: translateY(-6px); }
+    .price-card h3 { margin: 0; color: var(--primary-700); }
+    .price { font-size: 2.4rem; font-weight: 700; color: var(--primary-600); margin: 1rem 0 .25rem; }
+
+    /* ---------- גלריה ---------- */
+    .gallery-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    }
+    .gallery-grid img {
+      width: 100%;
+      aspect-ratio: 1 / 1; /* MODIFIED: Makes images square */
+      object-fit: cover;   /* MODIFIED: Ensures the image covers the square area, cropping if necessary */
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    /* ---------- צור קשר ---------- */
+    .contact {
+      text-align: center;
+      background: var(--primary-700);
+      color: #fff;
+      padding: 2.5rem 1rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .contact a { color: #fff; font-weight: 700; text-decoration: underline; }
+
+    /* ---------- אנימציות כניסה ---------- */
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity .8s ease, transform .8s ease; }
+    .fade-up.show { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+  <!-- ניווט -->
+  <nav class="navbar">
+    <span class="brand">סדנת מותססים</span>
+    <a class="cta" href="#contact">שריינו מקום</a>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <h1>סדנת מותססים <br> חמוצים פרוביוטים טעימים ובריאים</h1>
+  </header>
+
+  <main class="container">
+    <!-- פירוט -->
+    <section id="about" class="about fade-up">
+      <h2 class="section-title">על הסדנה</h2>
+      <p>
+        סדנה חווייתית באורך כשעתיים בה תגלו את רזי התססת הירקות ותכינו חמוצים צבעוניים ומלאי פרוביוטיקה – ללא חומרים משמרים.
+      </p>
+      <p>
+        נכיר את עקרונות התסיסה, נלמד לבחור ירקות איכותיים, לחשב אחוזי מלח מדויקים, לשמור על היגיינה ולנטר תהליך תסיסה בטוח ומוצלח.
+      </p>
+    </section>
+
+    <!-- Highlights -->
+    <section id="highlights" class="highlights fade-up">
+      <h2 class="section-title">מה תקבלו</h2>
+      <ul>
+        <li>ידע מעשי לתמיד – תכינו חמוצים מושלמים בבית בכל פעם</li>
+        <li>שתי צנצנות אישיות שתחזרו איתן הביתה</li>
+        <li>ליווי ותמיכה ב‑WhatsApp למשך חודשיים ללא עלות</li>
+      </ul>
+    </section>
+
+    <!-- Dates -->
+    <section id="dates" class="dates fade-up">
+      <h2 class="section-title">תאריכים קרובים</h2>
+      <p>בחרו את התאריך שנוח לכם (עד 4 תאריכים זמינים):</p>
+      <ul>
+        <li>03.06.2025 • בוקר / צהריים</li>
+        <li>26.06.2025 • בוקר / צהריים</li>
+      </ul>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="pricing fade-up">
+      <div class="price-card">
+        <h3>סדנה קבוצתית</h3>
+        <p class="price">€50</p>
+        <p>למשתתף (עד 6 אנשים בסדנה)</p>
+      </div>
+      <div class="price-card">
+        <h3>סדנה פרטית</h3>
+        <p class="price">€200</p>
+        <p>בתיאום אישי</p>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery" class="fade-up">
+      <h2 class="section-title" style="text-align:center;">הצצה למה שמחכה לכם</h2>
+      <div class="gallery-grid">
+        <img src="images/workshop1.jpeg" alt="צנצנות חמוצים צבעוניות" />
+        <img src="images/workshop2.jpeg" alt="משתתפים מכינים חמוצים" />
+        <img src="images/workshop3.jpeg" alt="קלוז‑אפ על ירקות בצנצנת" />
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact fade-up">
+      <h2 class="section-title" style="color:#fff;">מוזמנים לפנות אליי - מעין</h2>
+      <p style="font-size:1.1rem;">הסדנה מתקיימת באמסטלפיין (Amstelveen)</p>
+      <p>טלפון: <a href="tel:+31611675802">0611675802</a></p>
+      <p><a href="https://wa.me/31612345678" target="_blank" rel="noopener">שלחו הודעה ב‑WhatsApp</a></p>
+    </section>
+  </main>
+
+  <!-- סקריפט קטן לאפקט הופעה בעת גלילה -->
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(el => {
+        if (el.isIntersecting) el.target.classList.add('show');
+      });
+    }, { threshold: 0.18 });
+
+    document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>
