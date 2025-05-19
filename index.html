@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>סדנת מותססים – חמוצים מותססים בבית</title>
+  <title>
+    <span data-lang="he">סדנת מותססים – חמוצים מותססים בבית</span>
+    <span data-lang="en" style="display:none;">Fermentation Workshop – Craft Your Own Probiotic Pickles</span>
+  </title>
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&family=Varela+Round&display=swap" rel="stylesheet" />
@@ -19,6 +22,10 @@
       --radius: 18px;
       --shadow: 0 6px 22px rgba(0, 0, 0, .08);
       --max-w: 1160px;
+      --navbar-height: 58px;
+      --navbar-padding-horizontal: 6%;
+      --lang-switcher-width: 40px; /* Adjusted for single "EN" or "HE" */
+      --cta-lang-gap: 1rem;
     }
 
     * { box-sizing: border-box; }
@@ -33,29 +40,70 @@
     /* ----------  ניווט עליון  ---------- */
     .navbar {
       position: fixed;
-      top: 0; inset-inline: 0;
+      top: 0;
+      left: 0;
+      right: 0;
       background: #fff;
       box-shadow: var(--shadow);
       z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: .75rem 6%;
+      height: var(--navbar-height);
+      padding-top: .75rem;
+      padding-bottom: .75rem;
     }
+
     .navbar .brand {
+      position: absolute;
+      left: var(--navbar-padding-horizontal);
+      top: 50%;
+      transform: translateY(-50%);
       font-family: 'Varela Round', sans-serif;
       font-weight: 700;
       font-size: 1.35rem;
       color: var(--primary-700);
     }
+
+    .navbar .lang-switcher {
+      position: absolute;
+      right: var(--navbar-padding-horizontal);
+      top: 50%;
+      transform: translateY(-50%);
+      width: var(--lang-switcher-width);
+      text-align: center;
+    }
+    .lang-switcher a#lang-toggle-btn {
+      color: var(--primary-600);
+      text-decoration: none;
+      font-weight: 700;
+      padding: 0 .3rem;
+      display: inline-block;
+    }
+     .lang-switcher a#lang-toggle-btn:hover {
+        color: var(--accent-600);
+    }
+
     .navbar a.cta {
+      position: absolute;
+      /* Dynamic right positioning based on whether it's hidden or not */
+      /* This will be controlled by JS if needed, or we just hide it */
+      right: calc(var(--navbar-padding-horizontal) + var(--lang-switcher-width) + var(--cta-lang-gap));
+      top: 50%;
+      transform: translateY(-50%);
       background: linear-gradient(135deg, var(--accent-500), var(--accent-600));
       color: #fff;
       padding: .6rem 1.6rem;
       border-radius: var(--radius);
       text-decoration: none;
       font-weight: 500;
-      transition: transform .2s;
+      transition: transform .2s, opacity .3s ease; /* Added opacity transition */
+      opacity: 1; /* Default visible */
     }
-    .navbar a.cta:hover { transform: scale(1.05); }
+    .navbar a.cta:hover { transform: scale(1.05) translateY(-50%); }
+
+    .navbar a.cta.hidden-lang { /* Class to hide CTA */
+        opacity: 0;
+        pointer-events: none; /* Prevent interaction when hidden */
+    }
+
 
     /* ---------- Hero ---------- */
     header.hero {
@@ -64,15 +112,16 @@
       display: flex; align-items: center; justify-content: center;
       text-align: center;
       position: relative;
-      margin-top: 56px; /* navbar height */
+      margin-top: var(--navbar-height);
     }
     header.hero::after {
       content: "";
       position: absolute; inset: 0;
-      background: rgba(0,0,0,0);
+      background: rgba(0,0,0,0.3);
     }
     header.hero h1 {
       position: relative;
+      z-index: 1;
       font-size: 3rem;
       color: #fff;
       line-height: 1.2;
@@ -92,11 +141,14 @@
     }
     h2.section-title::after {
       content: "";
-      position: absolute; bottom: -6px; right: 0;
+      position: absolute; bottom: -6px;
       width: 120px; height: 4px;
       background: linear-gradient(135deg, var(--accent-500), var(--accent-600));
       border-radius: 2px;
     }
+    html[dir="rtl"] h2.section-title::after { right: 0; }
+    html[dir="ltr"] h2.section-title::after { left: 0; }
+
 
     /* ----------  פירוט הסדנה  ---------- */
     .about {
@@ -165,8 +217,8 @@
     }
     .gallery-grid img {
       width: 100%;
-      aspect-ratio: 1 / 1; /* MODIFIED: Makes images square */
-      object-fit: cover;   /* MODIFIED: Ensures the image covers the square area, cropping if necessary */
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
       border-radius: var(--radius);
       box-shadow: var(--shadow);
     }
@@ -190,88 +242,163 @@
 <body>
   <!-- ניווט -->
   <nav class="navbar">
-    <span class="brand">סדנת מותססים</span>
-    <a class="cta" href="#contact">שריינו מקום</a>
+    <span class="brand">
+      <span data-lang="he">סדנת מותססים</span>
+      <span data-lang="en" style="display:none;">Fermentation Workshop</span>
+    </span>
+    <a class="cta" href="#contact"> <!-- CTA button -->
+      <span data-lang="he">שריינו מקום</span>
+      <span data-lang="en" style="display:none;">Book a Spot</span>
+    </a>
+    <span class="lang-switcher">
+      <a href="#" id="lang-toggle-btn" title="Switch language"></a>
+    </span>
   </nav>
 
   <!-- Hero -->
   <header class="hero">
-    <h1>סדנת מותססים <br> חמוצים פרוביוטים טעימים ובריאים</h1>
+    <h1>
+      <span data-lang="he">סדנת מותססים <br> חמוצים פרוביוטים טעימים ובריאים</span>
+      <span data-lang="en" style="display:none;">Fermentation Workshop <br> Craft Delicious & Healthy Probiotic Pickles</span>
+    </h1>
   </header>
 
   <main class="container">
     <!-- פירוט -->
     <section id="about" class="about fade-up">
-      <h2 class="section-title">על הסדנה</h2>
-      <p>
+      <h2 class="section-title">
+        <span data-lang="he">על הסדנה</span>
+        <span data-lang="en" style="display:none;">About the Workshop</span>
+      </h2>
+      <p data-lang="he">
         סדנה חווייתית באורך כשעתיים בה תגלו את רזי התססת הירקות ותכינו חמוצים צבעוניים ומלאי פרוביוטיקה – ללא חומרים משמרים.
       </p>
-      <p>
+      <p data-lang="en" style="display:none;">
+        Join our hands-on, two-hour workshop to unlock the art of vegetable fermentation. You'll learn to create vibrant, probiotic-rich pickles from scratch – all without artificial preservatives.
+      </p>
+      <p data-lang="he">
         נכיר את עקרונות התסיסה, נלמד לבחור ירקות איכותיים, לחשב אחוזי מלח מדויקים, לשמור על היגיינה ולנטר תהליך תסיסה בטוח ומוצלח.
+      </p>
+      <p data-lang="en" style="display:none;">
+        Explore the fundamental principles of fermentation. We'll guide you through selecting quality vegetables, calculating precise salt ratios, ensuring optimal hygiene, and monitoring your ferments for a safe and successful outcome.
       </p>
     </section>
 
     <!-- Highlights -->
     <section id="highlights" class="highlights fade-up">
-      <h2 class="section-title">מה תקבלו</h2>
+      <h2 class="section-title">
+        <span data-lang="he">מה תקבלו</span>
+        <span data-lang="en" style="display:none;">Key Takeaways</span>
+      </h2>
       <ul>
-        <li>ידע מעשי לתמיד – תכינו חמוצים מושלמים בבית בכל פעם</li>
-        <li>שתי צנצנות אישיות שתחזרו איתן הביתה</li>
-        <li>ליווי ותמיכה ב‑WhatsApp למשך חודשיים ללא עלות</li>
+        <li>
+          <span data-lang="he">ידע מעשי לתמיד – תכינו חמוצים מושלמים בבית בכל פעם</span>
+          <span data-lang="en" style="display:none;">Gain lifelong practical skills to confidently create perfect fermented pickles at home, every time.</span>
+        </li>
+        <li>
+          <span data-lang="he">שתי צנצנות אישיות שתחזרו איתן הביתה</span>
+          <span data-lang="en" style="display:none;">Two personal jars of your fermented creations to take home.</span>
+        </li>
+        <li>
+          <span data-lang="he">ליווי ותמיכה ב‑WhatsApp למשך חודשיים ללא עלות</span>
+          <span data-lang="en" style="display:none;">Receive two months of complimentary WhatsApp support and guidance for any follow-up questions.</span>
+        </li>
       </ul>
     </section>
 
     <!-- Dates -->
     <section id="dates" class="dates fade-up">
-      <h2 class="section-title">תאריכים קרובים</h2>
-      <p>בחרו את התאריך שנוח לכם:</p>
+      <h2 class="section-title">
+        <span data-lang="he">תאריכים קרובים</span>
+        <span data-lang="en" style="display:none;">Upcoming Dates</span>
+      </h2>
+      <p>
+        <span data-lang="he">בחרו את התאריך שנוח לכם:</span>
+        <span data-lang="en" style="display:none;">Choose a date that suits you:</span>
+      </p>
       <ul>
-        <li>03.06.2025 • בוקר / צהריים</li>
-        <li>26.06.2025 • בוקר / צהריים</li>
+        <li>
+          <span data-lang="he">03.06.2025 • בוקר / צהריים</span>
+          <span data-lang="en" style="display:none;">03.06.2025 • Morning / Afternoon</span>
+        </li>
+        <li>
+          <span data-lang="he">26.06.2025 • בוקר / צהריים</span>
+          <span data-lang="en" style="display:none;">26.06.2025 • Morning / Afternoon</span>
+        </li>
       </ul>
     </section>
 
     <!-- Pricing -->
     <section id="pricing" class="pricing fade-up">
       <div class="price-card">
-        <h3>סדנה קבוצתית</h3>
+        <h3>
+          <span data-lang="he">סדנה קבוצתית</span>
+          <span data-lang="en" style="display:none;">Group Workshop</span>
+        </h3>
         <p class="price">€50</p>
-        <p>למשתתף (עד 6 אנשים בסדנה)</p>
+        <p>
+          <span data-lang="he">למשתתף (עד 6 אנשים בסדנה)</span>
+          <span data-lang="en" style="display:none;">Per participant (up to 6 people per workshop)</span>
+        </p>
       </div>
       <div class="price-card">
-        <h3>סדנה פרטית</h3>
+        <h3>
+          <span data-lang="he">סדנה פרטית</span>
+          <span data-lang="en" style="display:none;">Private Workshop</span>
+        </h3>
         <p class="price">€200</p>
-        <p>בתיאום אישי</p>
+        <p>
+          <span data-lang="he">בתיאום אישי</span>
+          <span data-lang="en" style="display:none;">Available for private bookings. Contact us to schedule.</span>
+        </p>
       </div>
     </section>
 
     <!-- Gallery -->
     <section id="gallery" class="fade-up">
-      <h2 class="section-title" style="text-align:center;">הצצה למה שמחכה לכם</h2>
+      <h2 class="section-title" style="text-align:center;">
+        <span data-lang="he">הצצה למה שמחכה לכם</span>
+        <span data-lang="en" style="display:none;">A Glimpse of What Awaits You</span>
+      </h2>
       <div class="gallery-grid">
-        <img src="workshop1.jpeg" alt="צנצנות חמוצים צבעוניות" />
-        <img src="workshop2.jpeg" alt="משתתפים מכינים חמוצים" />
-        <img src="workshop3.jpeg" alt="קלוז‑אפ על ירקות בצנצנת" />
-		<img src="workshop4.jpeg" alt="קלוז‑אפ על ירקות בצנצנת" />
-		<img src="workshop5.jpeg" alt="קלוז‑אפ על ירקות בצנצנת" />
-		<img src="workshop6.jpeg" alt="קלוז‑אפ על ירקות בצנצנת" />
-		<img src="workshop7.jpeg" alt="קלוז‑אפ על ירקות בצנצנת" />
-		<img src="workshop8.jpeg" alt="קלוז‑אפ על ירקות בצנצנת" />
-		<img src="workshop9.jpeg" alt="קלוז‑אפ על ירקות בצנצנת" />
+        <img src="workshop1.jpeg" alt-he="צנצנות חמוצים צבעוניות" alt-en="Colorful pickle jars" />
+        <img src="workshop2.jpeg" alt-he="משתתפים מכינים חמוצים" alt-en="Participants preparing pickles" />
+        <img src="workshop3.jpeg" alt-he="קלוז‑אפ על ירקות בצנצנת" alt-en="Close-up of vegetables in a jar" />
+        <img src="workshop4.jpeg" alt-he="קלוז‑אפ על ירקות בצנצנת" alt-en="Close-up of vegetables in a jar" />
+        <img src="workshop5.jpeg" alt-he="קלוז‑אפ על ירקות בצנצנת" alt-en="Close-up of vegetables in a jar" />
+        <img src="workshop6.jpeg" alt-he="קלוז‑אפ על ירקות בצנצנת" alt-en="Close-up of vegetables in a jar" />
+        <img src="workshop7.jpeg" alt-he="קלוז‑אפ על ירקות בצנצנת" alt-en="Close-up of vegetables in a jar" />
+        <img src="workshop8.jpeg" alt-he="קלוז‑אפ על ירקות בצנצנת" alt-en="Close-up of vegetables in a jar" />
+        <img src="workshop9.jpeg" alt-he="קלוז‑אפ על ירקות בצנצנת" alt-en="Close-up of vegetables in a jar" />
       </div>
     </section>
 
     <!-- Contact -->
     <section id="contact" class="contact fade-up">
-      <h2 class="section-title" style="color:#fff;">מוזמנים לפנות אליי - מעין</h2>
-      <p style="font-size:1.1rem;">הסדנה מתקיימת באמסטלפיין (Amstelveen)</p>
-      <p>טלפון: <a href="tel:+31611675802">0611675802</a></p>
-      <p><a href="https://wa.me/31612345678" target="_blank" rel="noopener">שלחו הודעה ב‑WhatsApp</a></p>
+      <h2 class="section-title" style="color:#fff;">
+        <span data-lang="he">מוזמנים לפנות אליי - מעין</span>
+        <span data-lang="en" style="display:none;">Get in Touch - Maayan</span>
+      </h2>
+      <p style="font-size:1.1rem;">
+        <span data-lang="he">הסדנה מתקיימת באמסטלפיין (Amstelveen)</span>
+        <span data-lang="en" style="display:none;">The workshop takes place in Amstelveen.</span>
+      </p>
+      <p>
+        <span data-lang="he">טלפון:</span>
+        <span data-lang="en" style="display:none;">Phone:</span>
+        <a href="tel:+31611675802">0611675802</a>
+      </p>
+      <p>
+        <a href="https://wa.me/31611675802" target="_blank" rel="noopener">
+          <span data-lang="he">שלחו הודעה ב‑WhatsApp</span>
+          <span data-lang="en" style="display:none;">Send a Message on WhatsApp</span>
+        </a>
+      </p>
     </section>
   </main>
 
-  <!-- סקריפט קטן לאפקט הופעה בעת גלילה -->
   <script>
+    // Intersection Observer for fade-up effect
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(el => {
         if (el.isIntersecting) el.target.classList.add('show');
@@ -279,6 +406,84 @@
     }, { threshold: 0.18 });
 
     document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
+
+    // Language Switcher & CTA
+    const langToggleButton = document.getElementById('lang-toggle-btn');
+    const ctaButton = document.querySelector('.navbar a.cta'); // Get the CTA button
+    const translatableElements = document.querySelectorAll('[data-lang]');
+    const htmlElement = document.documentElement;
+    const galleryImages = document.querySelectorAll('.gallery-grid img');
+
+    function setLanguage(lang) {
+      htmlElement.lang = lang;
+      htmlElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+
+      translatableElements.forEach(el => {
+        if (el.dataset.lang === lang) {
+          el.style.display = ''; 
+        } else {
+          el.style.display = 'none';
+        }
+      });
+      
+      galleryImages.forEach(img => {
+        const altHe = img.getAttribute('alt-he');
+        const altEn = img.getAttribute('alt-en');
+        if (lang === 'he' && altHe) {
+            img.alt = altHe;
+        } else if (lang === 'en' && altEn) {
+            img.alt = altEn;
+        } else if (altHe) { 
+            img.alt = altHe;
+        } else if (altEn) { 
+            img.alt = altEn;
+        } else {
+            img.alt = '';
+        }
+      });
+
+      // Update the toggle button
+      if (langToggleButton) {
+        if (lang === 'he') {
+          langToggleButton.textContent = 'EN';
+          langToggleButton.dataset.langSwitch = 'en';
+          langToggleButton.title = 'Switch to English';
+        } else {
+          langToggleButton.textContent = 'HE';
+          langToggleButton.dataset.langSwitch = 'he';
+          langToggleButton.title = 'Switch to Hebrew';
+        }
+      }
+
+      // Show/hide CTA button based on language
+      if (ctaButton) {
+        if (lang === 'en') {
+          // ctaButton.style.display = 'none'; // Direct hide
+          ctaButton.classList.add('hidden-lang'); // Hide with CSS class for transition
+        } else { // lang === 'he'
+          // ctaButton.style.display = ''; // Direct show (reverts to CSS default)
+          ctaButton.classList.remove('hidden-lang'); // Show with CSS class
+        }
+      }
+
+      localStorage.setItem('preferredLang', lang);
+
+      const galleryTitle = document.querySelector('#gallery .section-title');
+      if (galleryTitle) {
+        galleryTitle.style.textAlign = (lang === 'he') ? 'center' : 'center';
+      }
+    }
+
+    if (langToggleButton) {
+      langToggleButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        const langToSwitchTo = e.target.dataset.langSwitch;
+        setLanguage(langToSwitchTo);
+      });
+    }
+
+    const preferredLang = localStorage.getItem('preferredLang') || 'he';
+    setLanguage(preferredLang);
   </script>
 </body>
 </html>
