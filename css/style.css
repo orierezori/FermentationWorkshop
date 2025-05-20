@@ -1,0 +1,355 @@
+:root {
+    /* צבעים */
+    --primary-600: #2e7d32;
+    --primary-700: #1b5e20;
+    --accent-500:  #ff8f00;
+    --accent-600:  #ff6f00;
+    --bg: #fafafa;
+    --radius: 18px;
+    --shadow: 0 6px 22px rgba(0, 0, 0, .08);
+    --max-w: 1160px;
+    --navbar-height: 58px;
+    --navbar-padding-horizontal: 6%;
+    --lang-switcher-width: 40px; /* Adjusted for single "EN" or "HE" */
+    --cta-lang-gap: 1rem;
+}
+
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: 'Heebo', sans-serif;
+    background: var(--bg);
+    color: #212121;
+    overflow-x: hidden;
+}
+
+/* ----------  ניווט עליון  ---------- */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    box-shadow: var(--shadow);
+    z-index: 100;
+    height: var(--navbar-height);
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+}
+
+.navbar .brand {
+    position: absolute;
+    left: var(--navbar-padding-horizontal);
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Varela Round', sans-serif;
+    font-weight: 700;
+    font-size: 1.35rem;
+    color: var(--primary-700);
+}
+
+.navbar .lang-switcher {
+    position: absolute;
+    right: var(--navbar-padding-horizontal);
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(--lang-switcher-width);
+    text-align: center;
+}
+.lang-switcher a#lang-toggle-btn {
+    color: var(--primary-600);
+    text-decoration: none;
+    font-weight: 700;
+    padding: 0 .3rem;
+    display: inline-block;
+}
+    .lang-switcher a#lang-toggle-btn:hover {
+    color: var(--accent-600);
+}
+
+.navbar a.cta {
+    position: absolute;
+    /* Dynamic right positioning based on whether it's hidden or not */
+    /* This will be controlled by JS if needed, or we just hide it */
+    right: calc(var(--navbar-padding-horizontal) + var(--lang-switcher-width) + var(--cta-lang-gap));
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(135deg, var(--accent-500), var(--accent-600));
+    color: #fff;
+    padding: .6rem 1.6rem;
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-weight: 500;
+    transition: transform .2s, opacity .3s ease; /* Added opacity transition */
+    opacity: 1; /* Default visible */
+}
+.navbar a.cta:hover { transform: scale(1.05) translateY(-50%); }
+
+.navbar a.cta.hidden-lang { /* Class to hide CTA */
+    opacity: 0;
+    pointer-events: none; /* Prevent interaction when hidden */
+}
+
+
+/* ---------- Hero ---------- */
+header.hero {
+    background: url('../workshop1.jpeg') center/cover no-repeat; /* Adjusted path */
+    height: 440px;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    position: relative;
+    margin-top: var(--navbar-height);
+}
+header.hero::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,0.3);
+}
+header.hero h1 {
+    position: relative;
+    z-index: 1;
+    font-size: 3rem;
+    color: #fff;
+    line-height: 1.2;
+    margin: 0;
+    font-weight: 700;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+/* ----------  תוכן כללי  ---------- */
+.container { width: 90%; max-width: var(--max-w); margin: auto; padding: 3.5rem 0; }
+section { margin-bottom: 4rem; }
+h2.section-title {
+    margin-top: 0;
+    color: var(--primary-600);
+    font-size: 2rem;
+    position: relative;
+}
+h2.section-title::after {
+    content: "";
+    position: absolute; bottom: -6px;
+    width: 120px; height: 4px;
+    background: linear-gradient(135deg, var(--accent-500), var(--accent-600));
+    border-radius: 2px;
+}
+html[dir="rtl"] h2.section-title::after { right: 0; }
+html[dir="ltr"] h2.section-title::after { left: 0; }
+
+
+/* ----------  פירוט הסדנה  ---------- */
+.about {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 2.5rem;
+    box-shadow: var(--shadow);
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+/* ---------- Highlights ---------- */
+.highlights ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.25rem; }
+.highlights li {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 1.2rem 1.5rem;
+    box-shadow: var(--shadow);
+    position: relative;
+    padding-inline-end: 3rem;
+    overflow: hidden;
+}
+.highlights li::before {
+    content: "✔";
+    position: absolute; top: 50%; transform: translateY(-50%);
+    inset-inline-end: 1.2rem;
+    color: var(--accent-600);
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+/* ---------- תאריכים ---------- */
+.dates ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .75rem; }
+.dates li {
+    background: var(--primary-600);
+    color: #fff;
+    padding: .55rem 1rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    box-shadow: 0 3px 8px rgba(0,0,0,.15);
+}
+
+/* ---------- Pricing ---------- */
+.pricing { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); }
+.price-card {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+    border: 3px solid transparent;
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+    background-image: linear-gradient(#fff, #fff), linear-gradient(135deg,var(--accent-500), var(--primary-600));
+    transition: transform .25s;
+}
+.price-card:hover { transform: translateY(-6px); }
+.price-card h3 { margin: 0; color: var(--primary-700); }
+.price { font-size: 2.4rem; font-weight: 700; color: var(--primary-600); margin: 1rem 0 .25rem; }
+
+/* ---------- גלריה ---------- */
+.gallery-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+}
+.gallery-grid img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+/* ---------- צור קשר ---------- */
+.contact {
+    text-align: center;
+    background: var(--primary-700);
+    color: #fff;
+    padding: 2.5rem 1rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+.contact a { color: #fff; font-weight: 700; text-decoration: underline; }
+
+/* ---------- אנימציות כניסה ---------- */
+.fade-up { opacity: 0; transform: translateY(30px); transition: opacity .8s ease, transform .8s ease; }
+.fade-up.show { opacity: 1; transform: translateY(0); }
+
+/* ---------- Media Queries for Responsiveness ---------- */
+
+/* Tablets and larger mobile devices (up to 768px) */
+@media (max-width: 768px) {
+    body {
+        font-size: 95%; /* Slightly reduce base font if needed */
+    }
+
+    .navbar .brand {
+        font-size: 1.15rem;
+    }
+
+    .navbar a.cta {
+        padding: .5rem 1rem;
+        font-size: 0.9rem;
+        /* Consider hiding CTA on very small screens if space is an issue */
+    }
+
+    header.hero {
+        height: 380px;
+    }
+
+    header.hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .container {
+        width: 92%;
+        padding: 2.5rem 0;
+    }
+
+    h2.section-title {
+        font-size: 1.7rem;
+    }
+    h2.section-title::after {
+        width: 100px;
+    }
+
+    .about {
+        padding: 1.5rem;
+        font-size: 1rem;
+    }
+
+    .highlights li {
+        padding: 1rem 1.2rem;
+        padding-inline-end: 2.5rem; /* Adjust for checkmark */
+    }
+    .highlights li::before {
+        font-size: 1.2rem;
+        inset-inline-end: 1rem;
+    }
+
+    .pricing {
+        gap: 1rem;
+    }
+
+    .price-card {
+        padding: 1.5rem 1rem;
+    }
+    .price {
+        font-size: 2rem;
+    }
+
+    .gallery-grid {
+        gap: 0.75rem;
+    }
+}
+
+/* Smaller mobile devices (up to 480px) */
+@media (max-width: 480px) {
+    :root {
+        --navbar-padding-horizontal: 4%;
+        --cta-lang-gap: 0.5rem;
+    }
+
+    .navbar .brand {
+        font-size: 1rem;
+    }
+    
+    .navbar .lang-switcher {
+        /* Potentially adjust if overlapping */
+    }
+
+    .navbar a.cta {
+        /* Example: Hide CTA on very small screens */
+        /* display: none; */ 
+        padding: .4rem .8rem;
+        font-size: 0.8rem;
+        /* Adjust right positioning if lang switcher also moves */
+        right: calc(var(--navbar-padding-horizontal) + var(--lang-switcher-width) + var(--cta-lang-gap)); 
+    }
+
+    header.hero {
+        height: 300px;
+    }
+
+    header.hero h1 {
+        font-size: 1.8rem;
+    }
+
+    h2.section-title {
+        font-size: 1.5rem;
+    }
+
+    .container { 
+        padding: 2rem 0;
+    }
+
+    .highlights ul {
+        gap: 1rem;
+    }
+    
+    /* Ensure grid layouts become single column if not already handled by auto-fit */
+    .pricing,
+    .gallery-grid {
+        grid-template-columns: 1fr; /* Force single column */
+    }
+
+    .price-card h3 {
+        font-size: 1.1rem;
+    }
+    .price {
+        font-size: 1.8rem;
+    }
+
+    .contact {
+        padding: 2rem .75rem;
+    }
+} 
