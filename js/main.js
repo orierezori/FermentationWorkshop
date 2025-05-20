@@ -84,3 +84,16 @@ if (langToggleButton) {
 
 const preferredLang = localStorage.getItem('preferredLang') || 'he';
 setLanguage(preferredLang); 
+
+// Add click event to date list items
+const dateListItems = document.querySelectorAll('#dates ul li');
+dateListItems.forEach(li => {
+  li.style.cursor = 'pointer';
+  li.addEventListener('click', function() {
+    // Get the Hebrew date text
+    const dateText = this.querySelector('span[data-lang="he"]').textContent.trim();
+    const message = encodeURIComponent(`היי, אני מעוניין.ת להירשם לסדנה בתאריך ${dateText}`);
+    const waUrl = `https://wa.me/31611675802?text=${message}`;
+    window.open(waUrl, '_blank');
+  });
+}); 
