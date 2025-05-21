@@ -167,7 +167,15 @@ html[dir="ltr"] h2.section-title::after { left: 0; }
 }
 
 /* ---------- תאריכים ---------- */
-.dates ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .75rem; }
+.dates ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+    align-items: flex-start;
+}
 .dates li {
     background: var(--primary-600);
     color: #fff;
@@ -175,6 +183,21 @@ html[dir="ltr"] h2.section-title::after { left: 0; }
     border-radius: 9999px;
     font-weight: 500;
     box-shadow: 0 3px 8px rgba(0,0,0,.15);
+    min-width: 260px;
+    max-width: 320px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+}
+.dates li > span[data-lang] {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
 }
 
 /* ---------- Pricing ---------- */
@@ -352,4 +375,36 @@ html[dir="ltr"] h2.section-title::after { left: 0; }
     .contact {
         padding: 2rem .75rem;
     }
+}
+
+.last-spots-tag {
+  display: inline-block;
+  background: linear-gradient(90deg, var(--accent-500), var(--accent-600));
+  color: #fff;
+  font-size: 0.85em;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.18em 0.85em;
+  margin-inline-start: 0.5em;
+  vertical-align: middle;
+  letter-spacing: 0.01em;
+  box-shadow: 0 2px 6px rgba(255,143,0,0.10);
+}
+
+.workshop-full-tag {
+  display: inline-block;
+  background: linear-gradient(90deg, #e53935, #b71c1c);
+  color: #fff;
+  font-size: 0.85em;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.18em 0.85em;
+  margin-inline-start: 0.5em;
+  vertical-align: middle;
+  letter-spacing: 0.01em;
+  box-shadow: 0 2px 6px rgba(229,57,53,0.10);
+}
+.strike-date {
+  text-decoration: line-through;
+  opacity: 0.6;
 } 
