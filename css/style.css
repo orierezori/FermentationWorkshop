@@ -407,4 +407,18 @@ html[dir="ltr"] h2.section-title::after { left: 0; }
 .strike-date {
   text-decoration: line-through;
   opacity: 0.6;
+}
+
+.open-spots-tag {
+  display: inline-block;
+  background: linear-gradient(90deg, #bdbdbd, #757575);
+  color: #fff;
+  font-size: 0.85em;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.18em 0.85em;
+  margin-inline-start: 0.5em;
+  vertical-align: middle;
+  letter-spacing: 0.01em;
+  box-shadow: 0 2px 6px rgba(97,97,97,0.10);
 } 
