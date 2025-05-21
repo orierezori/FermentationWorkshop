@@ -55,10 +55,12 @@ function setLanguage(lang) {
         langToggleButton.textContent = 'EN';
         langToggleButton.dataset.langSwitch = 'en';
         langToggleButton.title = 'Switch to English';
+        langToggleButton.setAttribute('aria-label', 'Switch to English');
     } else {
         langToggleButton.textContent = 'HE';
         langToggleButton.dataset.langSwitch = 'he';
         langToggleButton.title = 'Switch to Hebrew';
+        langToggleButton.setAttribute('aria-label', 'Switch to Hebrew');
     }
     }
 
@@ -80,33 +82,55 @@ if (langToggleButton) {
     const langToSwitchTo = e.target.dataset.langSwitch;
     setLanguage(langToSwitchTo);
     });
+    // Keyboard accessibility
+    langToggleButton.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            const langToSwitchTo = e.target.dataset.langSwitch;
+            setLanguage(langToSwitchTo);
+        }
+    });
 }
 
 const preferredLang = localStorage.getItem('preferredLang') || 'he';
 setLanguage(preferredLang); 
 
-// Add click event to date list items
-const dateListItems = document.querySelectorAll('#dates ul li');
-dateListItems.forEach(li => {
-  // If the item is full, do not make it clickable
-  if (li.querySelector('.workshop-full-tag')) {
-    li.style.cursor = 'not-allowed';
-    return;
-  }
-  li.style.cursor = 'pointer';
-  li.addEventListener('click', function() {
+// Add click and keyboard event to date list items using event delegation
+const dateList = document.querySelector('#dates ul');
+dateList.addEventListener('click', function(e) {
+    let li = e.target.closest('li');
+    if (!li || li.getAttribute('aria-disabled') === 'true') return;
     // Get the Hebrew date text, excluding the tag
-    const heSpan = this.querySelector('span[data-lang="he"]');
+    const heSpan = li.querySelector('span[data-lang="he"]');
     let dateText = '';
-    // Collect only text nodes (exclude tag text)
     heSpan.childNodes.forEach(node => {
-      if (node.nodeType === Node.TEXT_NODE) {
-        dateText += node.textContent.trim();
-      }
+        if (node.nodeType === Node.TEXT_NODE) {
+            dateText += node.textContent.trim();
+        }
     });
     dateText = dateText.replace(/\s+/g, ' ').trim();
     const message = encodeURIComponent(`היי, אני מעוניין.ת להירשם לסדנה בתאריך ${dateText}`);
     const waUrl = `https://wa.me/31611675802?text=${message}`;
     window.open(waUrl, '_blank');
-  });
+});
+dateList.addEventListener('keydown', function(e) {
+    let li = e.target.closest('li');
+    if (!li || li.getAttribute('aria-disabled') === 'true') return;
+    if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        li.click();
+    }
+});
+// Set aria-disabled and tabindex for full workshops
+const dateListItems = document.querySelectorAll('#dates ul li');
+dateListItems.forEach(li => {
+    if (li.querySelector('.workshop-full-tag')) {
+        li.setAttribute('aria-disabled', 'true');
+        li.tabIndex = -1;
+        li.style.cursor = 'not-allowed';
+    } else {
+        li.setAttribute('aria-disabled', 'false');
+        li.tabIndex = 0;
+        li.style.cursor = 'pointer';
+    }
 }); 

@@ -1,0 +1,21 @@
+{
+  "name": "סדנת מותססים – חמוצים מותססים בבית",
+  "short_name": "מותססים",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fafafa",
+  "theme_color": "#2e7d32",
+  "description": "הצטרפו לסדנה חווייתית ולימדו להכין חמוצים פרוביוטיים צבעוניים ובריאים בבית!",
+  "icons": [
+    {
+      "src": "workshop1.jpeg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "workshop1.jpeg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+} 
