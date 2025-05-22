@@ -173,7 +173,7 @@
       <p>
         <span data-lang="he">טלפון:</span>
         <span data-lang="en" style="display:none;">Phone:</span>
-        <a href="tel:+31611675802">0611675802</a>
+        <a href="tel:+31611675802"><span dir="ltr">0611675802</span></a>
       </p>
       <p>
         <a href="https://wa.me/31611675802" target="_blank" rel="noopener">
@@ -243,6 +243,14 @@
       text-decoration: none;
       cursor: pointer;
     }
+    html[dir="rtl"], body.rtl {
+      direction: rtl;
+      text-align: right;
+    }
+    html[dir="ltr"], body.ltr {
+      direction: ltr;
+      text-align: left;
+    }
   </style>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -273,6 +281,35 @@
           modal.style.display = 'none';
         }
       });
+
+      // Language toggle logic
+      const langToggleBtn = document.getElementById('lang-toggle-btn');
+      const htmlEl = document.documentElement;
+
+      langToggleBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const isHebrew = htmlEl.getAttribute('lang') === 'he';
+        if (isHebrew) {
+          htmlEl.setAttribute('lang', 'en');
+          htmlEl.setAttribute('dir', 'ltr');
+          document.body.classList.remove('rtl');
+          document.body.classList.add('ltr');
+          // Show English, hide Hebrew
+          document.querySelectorAll('[data-lang="he"]').forEach(el => el.style.display = 'none');
+          document.querySelectorAll('[data-lang="en"]').forEach(el => el.style.display = '');
+        } else {
+          htmlEl.setAttribute('lang', 'he');
+          htmlEl.setAttribute('dir', 'rtl');
+          document.body.classList.remove('ltr');
+          document.body.classList.add('rtl');
+          // Show Hebrew, hide English
+          document.querySelectorAll('[data-lang="en"]').forEach(el => el.style.display = 'none');
+          document.querySelectorAll('[data-lang="he"]').forEach(el => el.style.display = '');
+        }
+      });
+
+      // Optionally, set initial state based on browser language
+      // (implement as needed)
     });
   </script>
   <script src="js/main.js" defer></script>
