@@ -90,6 +90,15 @@ body {
     pointer-events: none; /* Prevent interaction when hidden */
 }
 
+.navbar-logo {
+  height: 44px;
+  vertical-align: middle;
+  margin-left: 0.7em;
+  margin-right: 0;
+  display: inline-block;
+  max-width: 60px;
+  width: auto;
+}
 
 /* ---------- Hero ---------- */
 header.hero {
