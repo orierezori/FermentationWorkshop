@@ -634,4 +634,96 @@ html[dir="ltr"] .modal .close {
     .modal .close {
         font-size: 1.8rem;
     }
+}
+
+/* Styles for elements previously using inline styles */
+.contact .section-title { /* Was h2 style="color:#fff;" */
+    color: #fff;
+}
+
+#gallery .section-title { /* Was h2 style="text-align:center;" */
+    text-align: center;
+}
+
+/* Styling for the span that contains the cancellation policy links in the footer */
+.footer-links-container {
+    display: inline-block; /* To allow margin */
+    margin-inline-start: 1.5em; /* Replaces margin-right for LTR/RTL */
+}
+
+.cancellation-policy-link {
+    color: var(--primary-600); /* Was #2e7d32 */
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* The display:none for the English link is handled by the [data-lang="en"] rule in JS */
+
+/* ==========================================================================
+   Modal Styles
+   ========================================================================== */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 2rem 1.5rem;
+  border: 1px solid #888;
+  width: 90%;
+  max-width: 500px; /* Max width for the modal */
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  position: relative; /* For positioning the close button if needed */
+}
+/* Ensure modal content direction is handled by data-lang attributes or html dir */
+/* The .modal-content itself doesn't need direction: rtl; */
+
+.modal h2 {
+    margin-top: 0; /* From original inline style */
+}
+
+.modal .close {
+  color: #aaa;
+  float: left; /* For RTL, this will be to the left */
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 0.5em; /* For RTL, this pushes it from the left edge of modal-content */
+  background: none;
+  border: none;
+  padding: 0;
+  line-height: 1; /* Ensure consistent height */
+}
+
+html[dir="ltr"] .modal .close {
+    float: right;
+    margin-left: 0;
+    margin-right: 0.5em;
+}
+
+.modal .close:hover,
+.modal .close:focus {
+  color: var(--primary-600); /* Using theme color */
+  text-decoration: none;
+}
+
+/* Responsive modal content for very small screens if needed */
+@media (max-width: 480px) {
+    .modal-content {
+        margin: 10% auto; /* More margin for very small screens */
+        padding: 1.5rem 1rem;
+        font-size: 1rem; /* Adjust font size inside modal for smaller screens */
+    }
+    .modal .close {
+        font-size: 1.8rem;
+    }
 } 
