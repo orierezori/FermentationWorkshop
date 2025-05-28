@@ -133,4 +133,78 @@ dateListItems.forEach(li => {
         li.tabIndex = 0;
         li.style.cursor = 'pointer';
     }
+});
+
+// Cancellation Policy Modal Logic
+const modal = document.getElementById('cancellation-policy-modal');
+const openModalBtn = document.getElementById('cancellation-policy-link');
+const openModalBtnEn = document.getElementById('cancellation-policy-link-en');
+const closeModalBtn = document.getElementById('close-cancellation-modal');
+let previouslyFocusedElement = null;
+
+function openModal() {
+  if (!modal) return;
+  previouslyFocusedElement = document.activeElement;
+  modal.style.display = 'block';
+  // Set focus to the close button after a short delay to ensure it's visible
+  setTimeout(() => {
+    if (closeModalBtn) closeModalBtn.focus();
+  }, 50); 
+  // Apply language-specific display to modal content right before opening
+  // This ensures that if language was switched while modal was closed, it opens with correct lang
+  const currentLang = htmlElement.lang || 'he';
+  const modalTranslatableElements = modal.querySelectorAll('[data-lang]');
+  modalTranslatableElements.forEach(el => {
+    if (el.dataset.lang === currentLang) {
+        el.style.display = ''; 
+    } else {
+        el.style.display = 'none';
+    }
+  });
+  // Adjust close button title/aria-label based on current language
+  if (closeModalBtn) {
+    if (currentLang === 'he') {
+        closeModalBtn.title = 'סגור';
+        closeModalBtn.setAttribute('aria-label', 'סגור חלון מדיניות ביטולים');
+    } else {
+        closeModalBtn.title = 'Close';
+        closeModalBtn.setAttribute('aria-label', 'Close cancellation policy window');
+    }
+  }
+}
+
+function closeModal() {
+  if (!modal) return;
+  modal.style.display = 'none';
+  if (previouslyFocusedElement) {
+    previouslyFocusedElement.focus();
+  }
+}
+
+if (openModalBtn) {
+  openModalBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    openModal();
+  });
+}
+if (openModalBtnEn) {
+  openModalBtnEn.addEventListener('click', function(e) {
+    e.preventDefault();
+    openModal();
+  });
+}
+if (closeModalBtn) {
+  closeModalBtn.addEventListener('click', closeModal);
+}
+
+window.addEventListener('click', function(event) {
+  if (event.target === modal) {
+    closeModal();
+  }
+});
+
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Escape' && modal && modal.style.display === 'block') {
+    closeModal();
+  }
 }); 

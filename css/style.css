@@ -7,11 +7,12 @@
     --bg: #fafafa;
     --radius: 18px;
     --shadow: 0 6px 22px rgba(0, 0, 0, .08);
-    --max-w: 1160px;
+    --max-w: 1160px; /* Default max-width, applied in media query */
     --navbar-height: 58px;
-    --navbar-padding-horizontal: 6%;
-    --lang-switcher-width: 40px; /* Adjusted for single "EN" or "HE" */
-    --cta-lang-gap: 1rem;
+    /* Mobile-first defaults */
+    --navbar-padding-horizontal: 4%;
+    --lang-switcher-width: 40px;
+    --cta-lang-gap: 0.5rem;
 }
 
 * { box-sizing: border-box; }
@@ -21,6 +22,7 @@ body {
     background: var(--bg);
     color: #212121;
     overflow-x: hidden;
+    font-size: 100%; /* Base font size */
 }
 
 /* ----------  ניווט עליון  ---------- */
@@ -44,7 +46,7 @@ body {
     transform: translateY(-50%);
     font-family: 'Varela Round', sans-serif;
     font-weight: 700;
-    font-size: 1.35rem;
+    font-size: 1rem; /* Mobile: 1rem */
     color: var(--primary-700);
 }
 
@@ -62,48 +64,67 @@ body {
     font-weight: 700;
     padding: 0 .3rem;
     display: inline-block;
+    min-width: 48px; /* Touch target */
+    min-height: 48px; /* Touch target */
+    line-height: 48px; /* Touch target */
+    text-align: center; /* Touch target */
+    border-radius: var(--radius); /* Touch target */
 }
-    .lang-switcher a#lang-toggle-btn:hover {
+.lang-switcher a#lang-toggle-btn:hover {
     color: var(--accent-600);
 }
 
 .navbar a.cta {
     position: absolute;
-    /* Dynamic right positioning based on whether it's hidden or not */
-    /* This will be controlled by JS if needed, or we just hide it */
     right: calc(var(--navbar-padding-horizontal) + var(--lang-switcher-width) + var(--cta-lang-gap));
     top: 50%;
     transform: translateY(-50%);
     background: linear-gradient(135deg, var(--accent-500), var(--accent-600));
     color: #fff;
-    padding: .6rem 1.6rem;
+    padding: .4rem .8rem; /* Mobile: .4rem .8rem */
+    font-size: 0.8rem; /* Mobile: 0.8rem */
     border-radius: var(--radius);
     text-decoration: none;
     font-weight: 500;
-    transition: transform .2s, opacity .3s ease; /* Added opacity transition */
-    opacity: 1; /* Default visible */
+    transition: transform .2s, opacity .3s ease;
+    opacity: 1;
+    min-width: 48px; /* Touch target */
+    min-height: 48px; /* Touch target */
+    line-height: normal; /* Reset line-height if padding controls height */
+    display: flex; /* For centering content if line-height is not used */
+    align-items: center; /* For centering content */
+    justify-content: center; /* For centering content */
 }
 .navbar a.cta:hover { transform: scale(1.05) translateY(-50%); }
 
-.navbar a.cta.hidden-lang { /* Class to hide CTA */
+.navbar a.cta.hidden-lang {
     opacity: 0;
-    pointer-events: none; /* Prevent interaction when hidden */
+    pointer-events: none;
 }
 
 .navbar-logo {
-  height: 44px;
+  height: 40px; /* Adjusted for potentially smaller navbar height on mobile */
   vertical-align: middle;
-  margin-left: 0.7em;
-  margin-right: 0;
+  margin-left: 0.6em; /* RTL support: use margin-inline-end */
+  margin-right: 0; /* RTL support: use margin-inline-start */
   display: inline-block;
-  max-width: 60px;
+  max-width: 50px;
   width: auto;
 }
+html[dir="rtl"] .navbar-logo {
+    margin-right: 0.7em;
+    margin-left: 0;
+}
+html[dir="ltr"] .navbar-logo {
+    margin-left: 0.7em;
+    margin-right: 0;
+}
+
 
 /* ---------- Hero ---------- */
 header.hero {
-    background: url('../workshop1.jpeg') center/cover no-repeat; /* Adjusted path */
-    height: 440px;
+    background: url('../workshop1.jpeg') center/cover no-repeat;
+    height: 300px; /* Mobile: 300px */
     display: flex; align-items: center; justify-content: center;
     text-align: center;
     position: relative;
@@ -117,7 +138,7 @@ header.hero::after {
 header.hero h1 {
     position: relative;
     z-index: 1;
-    font-size: 3rem;
+    font-size: 1.8rem; /* Mobile: 1.8rem */
     color: #fff;
     line-height: 1.2;
     margin: 0;
@@ -126,52 +147,64 @@ header.hero h1 {
 }
 
 /* ----------  תוכן כללי  ---------- */
-.container { width: 90%; max-width: var(--max-w); margin: auto; padding: 3.5rem 0; }
-section { margin-bottom: 4rem; }
+.container {
+    width: 92%; /* Mobile: 92% */
+    margin: auto;
+    padding: 2rem 0; /* Mobile: 2rem 0 (was 1.2rem 0, then 2rem 0)*/
+}
+section { margin-bottom: 3rem; } /* Adjusted margin */
+
 h2.section-title {
     margin-top: 0;
     color: var(--primary-600);
-    font-size: 2rem;
+    font-size: 1.5rem; /* Mobile: 1.5rem */
     position: relative;
+    margin-bottom: 1.5rem; /* Added space below title */
 }
 h2.section-title::after {
     content: "";
     position: absolute; bottom: -6px;
-    width: 120px; height: 4px;
+    width: 80px; /* Mobile: Shorter underline */
+    height: 3px; /* Mobile: Thinner underline */
     background: linear-gradient(135deg, var(--accent-500), var(--accent-600));
     border-radius: 2px;
 }
 html[dir="rtl"] h2.section-title::after { right: 0; }
 html[dir="ltr"] h2.section-title::after { left: 0; }
 
-
 /* ----------  פירוט הסדנה  ---------- */
 .about {
     background: #fff;
     border-radius: var(--radius);
-    padding: 2.5rem;
+    padding: 1.5rem; /* Mobile: 1.5rem */
     box-shadow: var(--shadow);
-    font-size: 1.05rem;
-    line-height: 1.8;
+    font-size: 1rem; /* Mobile: 1rem */
+    line-height: 1.7; /* Adjusted line height */
 }
 
 /* ---------- Highlights ---------- */
-.highlights ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.25rem; }
+.highlights ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem; /* Mobile: 1rem */
+}
 .highlights li {
     background: #fff;
     border-radius: var(--radius);
-    padding: 1.2rem 1.5rem;
+    padding: 1rem 1.2rem; /* Mobile: 1rem 1.2rem */
     box-shadow: var(--shadow);
     position: relative;
-    padding-inline-end: 3rem;
+    padding-inline-end: 2.5rem; /* Mobile: 2.5rem */
     overflow: hidden;
 }
 .highlights li::before {
     content: "✔";
     position: absolute; top: 50%; transform: translateY(-50%);
-    inset-inline-end: 1.2rem;
+    inset-inline-end: 1rem; /* Mobile: 1rem */
     color: var(--accent-600);
-    font-size: 1.4rem;
+    font-size: 1.2rem; /* Mobile: 1.2rem */
     font-weight: 700;
 }
 
@@ -183,7 +216,8 @@ html[dir="ltr"] h2.section-title::after { left: 0; }
     display: flex;
     flex-wrap: wrap;
     gap: .75rem;
-    align-items: flex-start;
+    align-items: flex-start; /* Keep this */
+    justify-content: center; /* Center items on mobile */
 }
 .dates li {
     background: var(--primary-600);
@@ -192,14 +226,27 @@ html[dir="ltr"] h2.section-title::after { left: 0; }
     border-radius: 9999px;
     font-weight: 500;
     box-shadow: 0 3px 8px rgba(0,0,0,.15);
-    min-width: 260px;
-    max-width: 320px;
+    min-width: 240px; /* Adjusted min-width for mobile */
+    max-width: 100%; /* Allow full width if needed */
     height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    box-sizing: border-box;
+    box-sizing: border-box; /* Keep this */
+    /* Touch target improvements already good */
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.dates li:focus, .dates li:hover {
+  background: var(--accent-500);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(255,143,0,0.15);
+}
+.dates li[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none;
 }
 .dates li > span[data-lang] {
     width: 100%;
@@ -210,11 +257,15 @@ html[dir="ltr"] h2.section-title::after { left: 0; }
 }
 
 /* ---------- Pricing ---------- */
-.pricing { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); }
+.pricing {
+    display: grid;
+    gap: 1rem; /* Mobile: 1rem */
+    grid-template-columns: 1fr; /* Mobile: single column */
+}
 .price-card {
     background: #fff;
     border-radius: var(--radius);
-    padding: 2rem 1.5rem;
+    padding: 1rem 0.5rem; /* Mobile: 1rem 0.5rem */
     text-align: center;
     box-shadow: var(--shadow);
     border: 3px solid transparent;
@@ -224,14 +275,23 @@ html[dir="ltr"] h2.section-title::after { left: 0; }
     transition: transform .25s;
 }
 .price-card:hover { transform: translateY(-6px); }
-.price-card h3 { margin: 0; color: var(--primary-700); }
-.price { font-size: 2.4rem; font-weight: 700; color: var(--primary-600); margin: 1rem 0 .25rem; }
+.price-card h3 {
+    margin: 0;
+    color: var(--primary-700);
+    font-size: 1.1rem; /* Mobile: 1.1rem */
+}
+.price {
+    font-size: 1.8rem; /* Mobile: 1.8rem */
+    font-weight: 700;
+    color: var(--primary-600);
+    margin: 1rem 0 .25rem;
+}
 
 /* ---------- גלריה ---------- */
 .gallery-grid {
     display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 0.75rem; /* Mobile: 0.75rem */
+    grid-template-columns: 1fr; /* Mobile: single column */
 }
 .gallery-grid img {
     width: 100%;
@@ -246,7 +306,7 @@ html[dir="ltr"] h2.section-title::after { left: 0; }
     text-align: center;
     background: var(--primary-700);
     color: #fff;
-    padding: 2.5rem 1rem;
+    padding: 2rem .75rem; /* Mobile: 2rem .75rem */
     border-radius: var(--radius);
     box-shadow: var(--shadow);
 }
@@ -256,190 +316,48 @@ html[dir="ltr"] h2.section-title::after { left: 0; }
 .fade-up { opacity: 0; transform: translateY(30px); transition: opacity .8s ease, transform .8s ease; }
 .fade-up.show { opacity: 1; transform: translateY(0); }
 
-/* ---------- Media Queries for Responsiveness ---------- */
-
-/* Tablets and larger mobile devices (up to 768px) */
-@media (max-width: 768px) {
-    body {
-        font-size: 95%; /* Slightly reduce base font if needed */
-    }
-
-    .navbar .brand {
-        font-size: 1.15rem;
-    }
-
-    .navbar a.cta {
-        padding: .5rem 1rem;
-        font-size: 0.9rem;
-        /* Consider hiding CTA on very small screens if space is an issue */
-    }
-
-    header.hero {
-        height: 380px;
-    }
-
-    header.hero h1 {
-        font-size: 2.2rem;
-    }
-
-    .container {
-        width: 92%;
-        padding: 2.5rem 0;
-    }
-
-    h2.section-title {
-        font-size: 1.7rem;
-    }
-    h2.section-title::after {
-        width: 100px;
-    }
-
-    .about {
-        padding: 1.5rem;
-        font-size: 1rem;
-    }
-
-    .highlights li {
-        padding: 1rem 1.2rem;
-        padding-inline-end: 2.5rem; /* Adjust for checkmark */
-    }
-    .highlights li::before {
-        font-size: 1.2rem;
-        inset-inline-end: 1rem;
-    }
-
-    .pricing {
-        gap: 1rem;
-    }
-
-    .price-card {
-        padding: 1.5rem 1rem;
-    }
-    .price {
-        font-size: 2rem;
-    }
-
-    .gallery-grid {
-        gap: 0.75rem;
-    }
-}
-
-/* Smaller mobile devices (up to 480px) */
-@media (max-width: 480px) {
-    :root {
-        --navbar-padding-horizontal: 4%;
-        --cta-lang-gap: 0.5rem;
-    }
-
-    .navbar .brand {
-        font-size: 1rem;
-    }
-    
-    .navbar .lang-switcher {
-        /* Potentially adjust if overlapping */
-    }
-
-    .navbar a.cta {
-        /* Example: Hide CTA on very small screens */
-        /* display: none; */ 
-        padding: .4rem .8rem;
-        font-size: 0.8rem;
-        /* Adjust right positioning if lang switcher also moves */
-        right: calc(var(--navbar-padding-horizontal) + var(--lang-switcher-width) + var(--cta-lang-gap)); 
-    }
-
-    header.hero {
-        height: 300px;
-    }
-
-    header.hero h1 {
-        font-size: 1.8rem;
-    }
-
-    h2.section-title {
-        font-size: 1.5rem;
-    }
-
-    .container { 
-        padding: 2rem 0;
-    }
-
-    .highlights ul {
-        gap: 1rem;
-    }
-    
-    /* Ensure grid layouts become single column if not already handled by auto-fit */
-    .pricing,
-    .gallery-grid {
-        grid-template-columns: 1fr; /* Force single column */
-    }
-
-    .price-card h3 {
-        font-size: 1.1rem;
-    }
-    .price {
-        font-size: 1.8rem;
-    }
-
-    .contact {
-        padding: 2rem .75rem;
-    }
-}
-
-.last-spots-tag {
+/* ---------- Tags ---------- */
+.last-spots-tag, .workshop-full-tag, .open-spots-tag, .new-tag {
   display: inline-block;
-  background: linear-gradient(90deg, var(--accent-500), var(--accent-600));
   color: #fff;
-  font-size: 0.85em;
+  font-size: 0.8em; /* Slightly smaller for better fit */
   font-weight: 700;
   border-radius: 999px;
-  padding: 0.18em 0.85em;
+  padding: 0.2em 0.9em; /* Adjusted padding */
   margin-inline-start: 0.5em;
   vertical-align: middle;
   letter-spacing: 0.01em;
+}
+.last-spots-tag {
+  background: linear-gradient(90deg, var(--accent-500), var(--accent-600));
   box-shadow: 0 2px 6px rgba(255,143,0,0.10);
 }
-
 .workshop-full-tag {
-  display: inline-block;
   background: linear-gradient(90deg, #e53935, #b71c1c);
-  color: #fff;
-  font-size: 0.85em;
-  font-weight: 700;
-  border-radius: 999px;
-  padding: 0.18em 0.85em;
-  margin-inline-start: 0.5em;
-  vertical-align: middle;
-  letter-spacing: 0.01em;
   box-shadow: 0 2px 6px rgba(229,57,53,0.10);
 }
 .strike-date {
   text-decoration: line-through;
   opacity: 0.6;
 }
-
 .open-spots-tag {
-  display: inline-block;
   background: linear-gradient(90deg, #bdbdbd, #757575);
-  color: #fff;
-  font-size: 0.85em;
-  font-weight: 700;
-  border-radius: 999px;
-  padding: 0.18em 0.85em;
-  margin-inline-start: 0.5em;
-  vertical-align: middle;
-  letter-spacing: 0.01em;
   box-shadow: 0 2px 6px rgba(97,97,97,0.10);
 }
+.new-tag {
+  background: linear-gradient(90deg, #43a047, #66bb6a);
+  box-shadow: 0 2px 6px rgba(67,160,71,0.10);
+}
 
-/* Accessibility: Skip link */
+/* ---------- Accessibility: Skip link ---------- */
 .skip-link {
   position: absolute;
-  top: -40px;
+  top: -50px; /* Further off-screen */
   left: 0;
   background: var(--accent-500);
   color: #fff;
-  padding: 0.75em 1.5em;
+  padding: 0.5em 1em; /* Mobile: 0.5em 1em */
+  font-size: 1rem; /* Mobile: 1rem */
   z-index: 9999;
   border-radius: 0 0 8px 8px;
   font-weight: 700;
@@ -451,7 +369,7 @@ html[dir="ltr"] h2.section-title::after { left: 0; }
   outline: 2px solid var(--primary-700);
 }
 
-/* Accessibility: Visually hidden utility */
+/* ---------- Accessibility: Visually hidden utility ---------- */
 .visually-hidden {
   position: absolute !important;
   width: 1px;
@@ -464,70 +382,27 @@ html[dir="ltr"] h2.section-title::after { left: 0; }
   border: 0;
 }
 
-/* Focus states for accessibility */
+/* ---------- Focus states for accessibility ---------- */
 a, button, [tabindex]:not([tabindex="-1"]) {
   outline: none;
   transition: box-shadow 0.2s;
 }
-a:focus, button:focus, [tabindex]:focus {
+a:focus, button:focus, [tabindex]:not([tabindex="-1"]):focus { /* Specificity for tabindex */
   box-shadow: 0 0 0 3px var(--accent-500);
   outline: none;
 }
 
-/* Touch target improvements */
-.navbar .lang-switcher a#lang-toggle-btn,
-.navbar a.cta {
-  min-width: 48px;
-  min-height: 48px;
-  line-height: 48px;
-  text-align: center;
-  border-radius: var(--radius);
-}
-
-.dates li {
-  min-width: 48px;
-  min-height: 48px;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-}
-.dates li:focus, .dates li:hover {
-  background: var(--accent-500);
-  color: #fff;
-  box-shadow: 0 4px 16px rgba(255,143,0,0.15);
-}
-.dates li[aria-disabled="true"] {
-  cursor: not-allowed;
-  opacity: 0.6;
-  pointer-events: none;
-}
-
-/* Responsive improvements */
-@media (max-width: 480px) {
-  .skip-link {
-    font-size: 1rem;
-    padding: 0.5em 1em;
-  }
-  .navbar .brand {
-    font-size: 0.95rem;
-  }
-  .container {
-    padding: 1.2rem 0;
-  }
-  .price-card {
-    padding: 1rem 0.5rem;
-  }
-}
-
+/* ---------- Buttons ---------- */
 .btn-orange {
   display: inline-block;
   background: linear-gradient(135deg, var(--accent-500), var(--accent-600));
   color: #fff;
   font-weight: 700;
-  padding: 0.7em 2em;
+  padding: 0.7em 1.8em; /* Adjusted padding */
   border: none;
   border-radius: var(--radius);
   text-decoration: none;
-  font-size: 1.1rem;
+  font-size: 1rem; /* Adjusted font size */
   box-shadow: 0 2px 8px rgba(255,143,0,0.10);
   transition: background 0.2s, transform 0.2s;
   cursor: pointer;
@@ -539,16 +414,224 @@ a:focus, button:focus, [tabindex]:focus {
   text-decoration: none;
 }
 
-.new-tag {
-  display: inline-block;
-  background: linear-gradient(90deg, #43a047, #66bb6a);
-  color: #fff;
-  font-size: 0.85em;
-  font-weight: 700;
-  border-radius: 999px;
-  padding: 0.18em 0.85em;
-  margin-inline-start: 0.5em;
-  vertical-align: middle;
-  letter-spacing: 0.01em;
-  box-shadow: 0 2px 6px rgba(67,160,71,0.10);
+/* ==========================================================================
+   Tablet and Desktop Styles (min-width: 768px)
+   ========================================================================== */
+@media (min-width: 768px) {
+    :root {
+        --navbar-padding-horizontal: 6%;
+        --cta-lang-gap: 1rem;
+    }
+
+    body {
+        /* font-size: 95%; /* Re-evaluate if needed, base is 100% */
+    }
+
+    .navbar .brand {
+        font-size: 1.15rem; /* Tablet: 1.15rem */
+    }
+    .navbar-logo {
+        height: 44px;
+        max-width: 60px;
+    }
+
+    .navbar a.cta {
+        padding: .5rem 1.2rem; /* Tablet: .5rem 1rem, desktop .6rem 1.6rem */
+        font-size: 0.9rem; /* Tablet: 0.9rem */
+        /* right positioning updated by :root variables */
+    }
+
+    header.hero {
+        height: 380px; /* Tablet: 380px */
+    }
+
+    header.hero h1 {
+        font-size: 2.2rem; /* Tablet: 2.2rem */
+    }
+
+    .container {
+        width: 90%; /* Tablet: 92%, Desktop: 90% */
+        padding: 2.5rem 0; /* Tablet: 2.5rem 0 */
+    }
+
+    h2.section-title {
+        font-size: 1.7rem; /* Tablet: 1.7rem */
+    }
+    h2.section-title::after {
+        width: 100px; /* Tablet: 100px */
+        height: 4px;
+    }
+
+    .about {
+        padding: 2rem; /* Tablet: 1.5rem, Desktop: 2.5rem */
+        font-size: 1.05rem; /* Tablet: 1rem, Desktop: 1.05rem */
+    }
+
+    .highlights ul {
+        gap: 1.25rem; /* Desktop default */
+    }
+    .highlights li {
+        padding: 1.2rem 1.5rem; /* Desktop default */
+        padding-inline-end: 3rem; /* Desktop default */
+    }
+    .highlights li::before {
+        font-size: 1.4rem; /* Desktop default */
+        inset-inline-end: 1.2rem; /* Desktop default */
+    }
+    
+    .dates ul {
+        justify-content: flex-start; /* Align to start on larger screens */
+    }
+    .dates li {
+        min-width: 260px; /* Restore original min-width */
+    }
+
+    .pricing {
+        gap: 1.5rem; /* Desktop default */
+        grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); /* Desktop default */
+    }
+    .price-card {
+        padding: 1.5rem 1rem; /* Tablet: 1.5rem 1rem */
+    }
+    .price-card h3 {
+         font-size: 1.2rem; /* Adjusted for tablet */
+    }
+    .price {
+        font-size: 2rem; /* Tablet: 2rem */
+    }
+
+    .gallery-grid {
+        gap: 1rem; /* Desktop default */
+        grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); /* Desktop default */
+    }
+    
+    .contact {
+        padding: 2.5rem 1rem; /* Desktop default */
+    }
+
+    .skip-link {
+        padding: 0.75em 1.5em; /* Desktop default */
+        font-size: inherit; /* Desktop default */
+    }
+    
+    .btn-orange {
+        font-size: 1.1rem; /* Desktop default */
+        padding: 0.7em 2em; /* Desktop default */
+    }
+}
+
+/* ==========================================================================
+   Large Desktop Styles (min-width: 1161px - based on --max-w)
+   ========================================================================== */
+@media (min-width: 1161px) {
+    /* Restore more specific desktop styles if they were different from tablet */
+    .navbar .brand {
+        font-size: 1.35rem; /* Desktop */
+    }
+    .navbar a.cta {
+        padding: .6rem 1.6rem; /* Desktop */
+        font-size: 1rem; /* Approximation, was 500 weight without explicit size */
+    }
+     header.hero {
+        height: 440px; /* Desktop */
+    }
+    header.hero h1 {
+        font-size: 3rem; /* Desktop */
+    }
+    .container {
+        max-width: var(--max-w); /* Apply max-width for desktop */
+        padding: 3.5rem 0; /* Desktop */
+    }
+     h2.section-title {
+        font-size: 2rem; /* Desktop */
+    }
+    h2.section-title::after {
+        width: 120px; /* Desktop */
+    }
+    .about {
+        padding: 2.5rem; /* Desktop */
+    }
+    /* Highlights are already desktop from 768px */
+    /* Dates are already good from 768px */
+    /* Pricing grid is already desktop from 768px */
+    .price-card {
+        padding: 2rem 1.5rem; /* Desktop */
+    }
+     .price-card h3 {
+        font-size: 1.2rem; /* Keep or adjust if original was different */
+    }
+    .price {
+        font-size: 2.4rem; /* Desktop */
+    }
+    /* Gallery grid is already desktop from 768px */
+    /* Contact is already desktop from 768px */
+} 
+
+/* ==========================================================================
+   Modal Styles
+   ========================================================================== */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 2rem 1.5rem;
+  border: 1px solid #888;
+  width: 90%;
+  max-width: 500px; /* Max width for the modal */
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  position: relative; /* For positioning the close button if needed */
+}
+/* Ensure modal content direction is handled by data-lang attributes or html dir */
+/* The .modal-content itself doesn't need direction: rtl; */
+
+.modal h2 {
+    margin-top: 0; /* From original inline style */
+}
+
+.modal .close {
+  color: #aaa;
+  float: left; /* For RTL, this will be to the left */
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 0.5em; /* For RTL, this pushes it from the left edge of modal-content */
+  background: none;
+  border: none;
+  padding: 0;
+  line-height: 1; /* Ensure consistent height */
+}
+
+html[dir="ltr"] .modal .close {
+    float: right;
+    margin-left: 0;
+    margin-right: 0.5em;
+}
+
+.modal .close:hover,
+.modal .close:focus {
+  color: var(--primary-600); /* Using theme color */
+  text-decoration: none;
+}
+
+/* Responsive modal content for very small screens if needed */
+@media (max-width: 480px) {
+    .modal-content {
+        margin: 10% auto; /* More margin for very small screens */
+        padding: 1.5rem 1rem;
+        font-size: 1rem; /* Adjust font size inside modal for smaller screens */
+    }
+    .modal .close {
+        font-size: 1.8rem;
+    }
 } 

@@ -196,10 +196,10 @@
     </span>
   </footer>
   <!-- Cancellation Policy Modal -->
-  <div id="cancellation-policy-modal" class="modal" style="display:none;">
+  <div id="cancellation-policy-modal" class="modal" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="cancellation-policy-modal-title">
     <div class="modal-content">
-      <span class="close" id="close-cancellation-modal" title="סגור">&times;</span>
-      <h2 style="margin-top:0;"><span data-lang="he">מדיניות ביטולים לסדנה</span><span data-lang="en" style="display:none;">Workshop Cancellation Policy</span></h2>
+      <button class="close" id="close-cancellation-modal" title="סגור" aria-label="סגור חלון מדיניות ביטולים">&times;</button>
+      <h2 style="margin-top:0;" id="cancellation-policy-modal-title"><span data-lang="he">מדיניות ביטולים לסדנה</span><span data-lang="en" style="display:none;">Workshop Cancellation Policy</span></h2>
       <p data-lang="he">הסדנה מתקיימת בקבוצות קטנות, וההשתתפות בה מחייבת רכישת חומרים מראש ושמירה על מקום על חשבון משתתפים אחרים שלא יכלו להירשם. לכן, לצערי לא ניתן לקבל החזר כספי במקרה של ביטול.</p>
       <p data-lang="en" style="display:none;">The workshop is held in small groups, and participation requires advance purchase of materials and reserving a spot at the expense of others who could not register. Therefore, unfortunately, refunds are not possible in case of cancellation.</p>
       <p data-lang="he">במקרים חריגים בלבד (כגון מחלה או אירוע בלתי צפוי), ובתנאי שניתנה הודעה לפחות 48 שעות לפני הסדנה, ניתן יהיה להעביר את ההשתתפות למועד אחר, בכפוף לתיאום ועל בסיס מקום פנוי.</p>
@@ -210,112 +210,6 @@
       <p data-lang="en" style="display:none;">Thank you for your understanding!</p>
     </div>
   </div>
-  <style>
-    .modal {
-      display: none; /* Hidden by default */
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.4);
-    }
-    .modal-content {
-      background-color: #fefefe;
-      margin: 5% auto;
-      padding: 2rem 1.5rem;
-      border: 1px solid #888;
-      width: 90%;
-      max-width: 500px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-      direction: rtl;
-      font-size: 1.1rem;
-    }
-    .close {
-      color: #aaa;
-      float: left;
-      font-size: 2rem;
-      font-weight: bold;
-      cursor: pointer;
-      margin-left: 0.5em;
-    }
-    .close:hover, .close:focus {
-      color: #2e7d32;
-      text-decoration: none;
-      cursor: pointer;
-    }
-    html[dir="rtl"], body.rtl {
-      direction: rtl;
-      text-align: right;
-    }
-    html[dir="ltr"], body.ltr {
-      direction: ltr;
-      text-align: left;
-    }
-  </style>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var modal = document.getElementById('cancellation-policy-modal');
-      var btn = document.getElementById('cancellation-policy-link');
-      var btnEn = document.getElementById('cancellation-policy-link-en');
-      var span = document.getElementById('close-cancellation-modal');
-      btn.onclick = function(e) {
-        e.preventDefault();
-        modal.style.display = 'block';
-      }
-      if (btnEn) {
-        btnEn.onclick = function(e) {
-          e.preventDefault();
-          modal.style.display = 'block';
-        }
-      }
-      span.onclick = function() {
-        modal.style.display = 'none';
-      }
-      window.onclick = function(event) {
-        if (event.target == modal) {
-          modal.style.display = 'none';
-        }
-      }
-      document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape') {
-          modal.style.display = 'none';
-        }
-      });
-
-      // Language toggle logic
-      const langToggleBtn = document.getElementById('lang-toggle-btn');
-      const htmlEl = document.documentElement;
-
-      langToggleBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        const isHebrew = htmlEl.getAttribute('lang') === 'he';
-        if (isHebrew) {
-          htmlEl.setAttribute('lang', 'en');
-          htmlEl.setAttribute('dir', 'ltr');
-          document.body.classList.remove('rtl');
-          document.body.classList.add('ltr');
-          // Show English, hide Hebrew
-          document.querySelectorAll('[data-lang="he"]').forEach(el => el.style.display = 'none');
-          document.querySelectorAll('[data-lang="en"]').forEach(el => el.style.display = '');
-        } else {
-          htmlEl.setAttribute('lang', 'he');
-          htmlEl.setAttribute('dir', 'rtl');
-          document.body.classList.remove('ltr');
-          document.body.classList.add('rtl');
-          // Show Hebrew, hide English
-          document.querySelectorAll('[data-lang="en"]').forEach(el => el.style.display = 'none');
-          document.querySelectorAll('[data-lang="he"]').forEach(el => el.style.display = '');
-        }
-      });
-
-      // Optionally, set initial state based on browser language
-      // (implement as needed)
-    });
-  </script>
   <script src="js/main.js" defer></script>
 </body>
 </html>
