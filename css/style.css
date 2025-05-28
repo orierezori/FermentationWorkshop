@@ -537,4 +537,18 @@ a:focus, button:focus, [tabindex]:focus {
   transform: translateY(-2px) scale(1.04);
   color: #fff;
   text-decoration: none;
+}
+
+.new-tag {
+  display: inline-block;
+  background: linear-gradient(90deg, #43a047, #66bb6a);
+  color: #fff;
+  font-size: 0.85em;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.18em 0.85em;
+  margin-inline-start: 0.5em;
+  vertical-align: middle;
+  letter-spacing: 0.01em;
+  box-shadow: 0 2px 6px rgba(67,160,71,0.10);
 } 
