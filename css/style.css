@@ -299,6 +299,11 @@ html[dir="ltr"] h2.section-title::after { left: 0; }
     object-fit: cover;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
+    /* Mobile image loading optimizations */
+    max-width: 100%;
+    height: auto;
+    /* Prevent layout shift during loading */
+    background-color: #f5f5f5;
 }
 
 /* ---------- צור קשר ---------- */
