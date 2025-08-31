@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Image Debug</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        img { max-width: 200px; margin: 10px; border: 2px solid #ccc; }
+        .loaded { border-color: green !important; }
+        .error { border-color: red !important; }
+        .info { background: #f0f0f0; padding: 10px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>Mobile Image Loading Debug Test</h1>
+
+    <div class="info">
+        <strong>Browser Info:</strong><br>
+        User Agent: <span id="ua"></span><br>
+        Supports lazy loading: <span id="lazy-support"></span><br>
+        Online: <span id="online-status"></span><br>
+        Screen size: <span id="screen-size"></span>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 1: Basic Image Loading</h2>
+        <img src="workshop1.jpeg" alt="Basic test" id="test1" />
+    </div>
+
+    <div class="test-section">
+        <h2>Test 2: Lazy Loading</h2>
+        <img src="workshop2.jpeg" alt="Lazy test" loading="lazy" id="test2" />
+    </div>
+
+    <div class="test-section">
+        <h2>Test 3: Cache Busting</h2>
+        <img src="workshop3.jpeg?v=1&t=123456789" alt="Cache bust test" id="test3" />
+    </div>
+
+    <div class="test-section">
+        <h2>Test 4: Direct URL</h2>
+        <img src="http://localhost:8000/workshop4.jpeg" alt="Direct URL test" id="test4" />
+    </div>
+
+    <div class="info">
+        <strong>Debug Console:</strong><br>
+        <div id="debug-console"></div>
+    </div>
+
+    <script>
+        // Update browser info
+        document.getElementById('ua').textContent = navigator.userAgent;
+        document.getElementById('lazy-support').textContent = 'loading' in document.createElement('img') ? 'Yes' : 'No';
+        document.getElementById('online-status').textContent = navigator.onLine ? 'Yes' : 'No';
+        document.getElementById('screen-size').textContent = window.innerWidth + 'x' + window.innerHeight;
+
+        const consoleDiv = document.getElementById('debug-console');
+
+        function log(message) {
+            consoleDiv.innerHTML += new Date().toLocaleTimeString() + ': ' + message + '<br>';
+            console.log(message);
+        }
+
+        // Test each image
+        document.querySelectorAll('img').forEach((img, index) => {
+            img.addEventListener('load', function() {
+                this.classList.add('loaded');
+                log(`✅ Image ${index + 1} loaded: ${this.src}`);
+            });
+
+            img.addEventListener('error', function() {
+                this.classList.add('error');
+                log(`❌ Image ${index + 1} failed: ${this.src} (Error: ${this.naturalWidth}x${this.naturalHeight})`);
+            });
+        });
+
+        // Network monitoring
+        window.addEventListener('online', () => log('🌐 Network: Online'));
+        window.addEventListener('offline', () => log('🌐 Network: Offline'));
+
+        // Performance monitoring
+        window.addEventListener('load', () => {
+            const perfData = performance.getEntriesByType('resource');
+            perfData.forEach(entry => {
+                if (entry.name.includes('.jpeg') || entry.name.includes('.jpg')) {
+                    log(`📊 ${entry.name}: ${Math.round(entry.transferSize / 1024)}KB in ${Math.round(entry.responseEnd - entry.requestStart)}ms`);
+                }
+            });
+        });
+
+        log('🚀 Debug test started');
+    </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Test</title>
+</head>
+<body>
+    <h1>Testing Image Loading</h1>
+    <div>
+        <h2>Regular img tag:</h2>
+        <img src="workshop1.jpeg" alt="Test image" style="max-width: 300px;" />
+    </div>
+    <div>
+        <h2>Lazy loading img tag:</h2>
+        <img src="workshop1.jpeg" alt="Test image with lazy loading" loading="lazy" style="max-width: 300px;" />
+    </div>
+    <div>
+        <h2>Image with explicit dimensions:</h2>
+        <img src="workshop1.jpeg" alt="Test image with dimensions" width="300" height="300" />
+    </div>
+
+    <script>
+        // Check when images load
+        document.querySelectorAll('img').forEach((img, index) => {
+            img.addEventListener('load', () => {
+                console.log(`Image ${index + 1} loaded successfully:`, img.src);
+                img.style.border = '2px solid green';
+            });
+
+            img.addEventListener('error', () => {
+                console.error(`Image ${index + 1} failed to load:`, img.src);
+                img.style.border = '2px solid red';
+            });
+        });
+
+        // Log network status
+        console.log('Network online:', navigator.onLine);
+        console.log('Loading attribute support:', 'loading' in document.createElement('img'));
+    </script>
+</body>
+</html>

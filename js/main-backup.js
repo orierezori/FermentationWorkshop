@@ -1,26 +1,64 @@
-// Simple Intersection Observer for fade-up effect
+// Intersection Observer for fade-up effect and lazy loading fallback
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(el => {
-        if (el.isIntersecting) {
-            el.target.classList.add('show');
+    if (el.isIntersecting) {
+        el.target.classList.add('show');
+        // Lazy loading fallback for browsers that don't support loading="lazy"
+        if (el.target.tagName === 'IMG' && el.target.dataset.src) {
+            el.target.src = el.target.dataset.src;
+            el.target.removeAttribute('data-src');
         }
+    }
     });
-}, { threshold: 0.18 });
+}, { threshold: 0.18, rootMargin: '50px' });
 
-// Observe fade-up elements
 document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
 
-// Basic image error handling
+// Simple fallback lazy loading for images without native support
+if (!('loading' in document.createElement('img'))) {
+    // Browser doesn't support native lazy loading
+    document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+        const src = img.src;
+        img.src = ''; // Clear src to prevent loading
+        img.dataset.src = src; // Store original src
+        observer.observe(img); // Observe for intersection
+    });
+}
+
+// Image error handling for mobile networks
 document.querySelectorAll('img').forEach(img => {
     img.addEventListener('error', function() {
         console.warn(`Image failed to load: ${this.src}`);
-        this.style.border = '2px solid #f44336';
+        // Add error styling
         this.style.backgroundColor = '#ffebee';
+        this.style.border = '2px solid #f44336';
+        this.alt = this.alt + ' (Image failed to load)';
     });
 
     img.addEventListener('load', function() {
-        console.log(`Image loaded: ${this.src}`);
+        // Remove loading background when image loads successfully
+        this.style.backgroundColor = '';
     });
+});
+
+// Network status detection for mobile optimization
+let isOnline = navigator.onLine;
+window.addEventListener('online', function() {
+    isOnline = true;
+    console.log('Connection restored - reloading failed images');
+    // Retry loading failed images when connection is restored
+    document.querySelectorAll('img[style*="background-color: rgb(255, 235, 238)"]').forEach(img => {
+        if (img.dataset.src) {
+            img.src = img.dataset.src;
+        } else {
+            img.src = img.src; // Force reload
+        }
+    });
+});
+
+window.addEventListener('offline', function() {
+    isOnline = false;
+    console.log('Connection lost');
 });
 
 // Language Switcher & CTA

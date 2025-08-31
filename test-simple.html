@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Image Test</title>
+    <style>
+        img {
+            max-width: 300px;
+            border: 2px solid blue;
+            margin: 10px;
+        }
+        .loaded {
+            border-color: green !important;
+        }
+        .error {
+            border-color: red !important;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simple Image Loading Test</h1>
+    <p>This tests basic image loading without any JavaScript.</p>
+
+    <img src="workshop1.jpeg" alt="Workshop 1" />
+    <img src="workshop2.jpeg" alt="Workshop 2" />
+    <img src="workshop3.jpeg" alt="Workshop 3" />
+
+    <p>Scroll down to see more images:</p>
+    <br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br>
+
+    <img src="workshop4.jpeg" alt="Workshop 4" />
+    <img src="workshop5.jpeg" alt="Workshop 5" />
+    <img src="workshop6.jpeg" alt="Workshop 6" />
+
+    <p>If images have green borders, they loaded successfully.</p>
+    <p>If images have red borders, they failed to load.</p>
+</body>
+</html>
