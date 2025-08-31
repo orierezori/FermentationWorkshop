@@ -1,14 +1,35 @@
-// Simple Intersection Observer for fade-up effect
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(el => {
-        if (el.isIntersecting) {
-            el.target.classList.add('show');
-        }
-    });
-}, { threshold: 0.18 });
+// Simple Intersection Observer for fade-up effect with mobile fallback
+function revealFadeUpSectionsImmediately() {
+    document.querySelectorAll('.fade-up').forEach((el) => el.classList.add('show'));
+}
 
-// Observe fade-up elements
-document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
+try {
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, { threshold: 0.18 });
+
+        document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
+
+        // Failsafe: if not revealed shortly after load (some mobile browsers), reveal all
+        setTimeout(() => {
+            const anyHidden = Array.from(document.querySelectorAll('.fade-up')).some((el) => !el.classList.contains('show'));
+            if (anyHidden) {
+                revealFadeUpSectionsImmediately();
+            }
+        }, 1200);
+    } else {
+        // No IntersectionObserver support → reveal immediately
+        revealFadeUpSectionsImmediately();
+    }
+} catch (_) {
+    // Any unexpected error → reveal immediately to avoid invisible content
+    revealFadeUpSectionsImmediately();
+}
 
 // Language Switcher & CTA
 const langToggleButton = document.getElementById('lang-toggle-btn');
