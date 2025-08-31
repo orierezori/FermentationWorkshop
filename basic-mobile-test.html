@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Test</title>
+    <style>
+        body { font-size: 18px; padding: 20px; }
+        .success { color: green; font-weight: bold; }
+        .info { background: #e8f4fd; padding: 15px; margin: 10px 0; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>📱 BASIC MOBILE TEST</h1>
+
+    <div class="info">
+        <h2>✅ SUCCESS!</h2>
+        <p>Your mobile device can:</p>
+        <ul>
+            <li>Display HTML pages</li>
+            <li>Load CSS styles</li>
+            <li>Run JavaScript</li>
+            <li>Access local files</li>
+        </ul>
+    </div>
+
+    <h2>Device Information:</h2>
+    <p><strong>Screen Size:</strong> <span id="size"></span></p>
+    <p><strong>Browser:</strong> <span id="browser"></span></p>
+    <p><strong>Touch Screen:</strong> <span id="touch"></span></p>
+    <p><strong>Network:</strong> <span id="network"></span></p>
+
+    <div class="info">
+        <h2>🎯 Next Steps:</h2>
+        <p>If you can see this page clearly:</p>
+        <ol>
+            <li>The issue is NOT with your mobile device</li>
+            <li>The issue is NOT with basic web page loading</li>
+            <li>The issue is with IMAGE LOADING specifically</li>
+        </ol>
+        <p class="success">Try the other test files to check image loading!</p>
+    </div>
+
+    <script>
+        document.getElementById('size').textContent = window.innerWidth + '×' + window.innerHeight;
+        document.getElementById('browser').textContent = navigator.userAgent.split(' ')[0];
+        document.getElementById('touch').textContent = 'ontouchstart' in window ? 'Yes' : 'No';
+        document.getElementById('network').textContent = navigator.onLine ? 'Online' : 'Offline';
+    </script>
+</body>
+</html>

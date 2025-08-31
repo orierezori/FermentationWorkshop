@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Image Test - Standalone</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .image-item {
+            border: 3px solid #ff6f00;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #f9f9f9;
+        }
+        .image-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        .image-item.success {
+            border-color: #4caf50;
+        }
+        .image-item.error {
+            border-color: #f44336;
+        }
+        .status {
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .success { background: #e8f5e8; color: #2e7d32; }
+        .error { background: #ffebee; color: #c62828; }
+        .loading { background: #fff3e0; color: #f57c00; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Mobile Image Loading Test</h1>
+    <p>This page contains embedded images that should work on any device.</p>
+
+    <div class="status" id="status">⏳ Loading images...</div>
+
+    <div class="image-grid">
+        <div class="image-item" id="img1">
+            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QBMRXhpZgAATU0AKgAAAAgABAEaAAUAAAABAAAAPgEbAAUAAAABAAAARgEoAAMAAAABAAIAAAExAAIAAAAcAAAASodpAAQAAAABAAAANwAAAAAAAABgAAAAAQAAAGAAAAABcGFpbm50Lm5ldCA0LjAuNAAA/9sAQwAFAwQEBAMDBQcGCAYJDAcGCAwXGRgnIh4kJCMnKy8xNzU1OzM9NTo0Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7/9sAQwEFAwQEBAMDBQcGCAYJDAcGCAwXGRgnIh4kJCMnKy8xNzU1OzM9NTo0Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7/8AAEQgAIAAoAwERAAIRAQMDBQoDBgUGBwcGCAw0LCgsLEQ4SEhERTExNUVFRkpP/2Q==" alt="Embedded Image 1" onload="imageLoaded(1)" onerror="imageError(1)" />
+        </div>
+        <div class="image-item" id="img2">
+            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QBMRXhpZgAATU0AKgAAAAgABAEaAAUAAAABAAAAPgEbAAUAAAABAAAARgEoAAMAAAABAAIAAAExAAIAAAAcAAAASodpAAQAAAABAAAANwAAAAAAAABgAAAAAQAAAGAAAAABcGFpbm50Lm5ldCA0LjAuNAAA/9sAQwAFAwQEBAMDBQcGCAYJDAcGCAwXGRgnIh4kJCMnKy8xNzU1OzM9NTo0Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7/9sAQwEFAwQEBAMDBQcGCAYJDAcGCAwXGRgnIh4kJCMnKy8xNzU1OzM9NTo0Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7/8AAEQgAIAAoAwERAAIRAQMDBQoDBgUGBwcGCAw0LCgsLEQ4SEhERTExNUVFRkpP/2Q==" alt="Embedded Image 2" onload="imageLoaded(2)" onerror="imageError(2)" />
+        </div>
+        <div class="image-item" id="img3">
+            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAYABgAAD/4QCARXhpZgAATU0AKgAAAAgABAEaAAUAAAABAAAAPgEbAAUAAAABAAAARgEoAAMAAAABAAIAAAExAAIAAAAcAAAASodpAAQAAAABAAAANwAAAAAAAABgAAAAAQAAAGAAAAABcGFpbm50Lm5ldCA0LjAuNAAA/9sAQwAFAwQEBAMDBQcGCAYJDAcGCAwXGRgnIh4kJCMnKy8xNzU1OzM9NTo0Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7/9sAQwEFAwQEBAMDBQcGCAYJDAcGCAwXGRgnIh4kJCMnKy8xNzU1OzM9NTo0Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7/8AAEQgAIAAoAwERAAIRAQMDBQoDBgUGBwcGCAw0LCgsLEQ4SEhERTExNUVFRkpP/2Q==" alt="Embedded Image 3" onload="imageLoaded(3)" onerror="imageError(3)" />
+        </div>
+    </div>
+
+    <div class="status">
+        <strong>📱 Device Info:</strong><br>
+        User Agent: <span id="ua"></span><br>
+        Screen Size: <span id="screen"></span><br>
+        Online Status: <span id="online"></span><br>
+        Touch Support: <span id="touch"></span>
+    </div>
+
+    <div class="status">
+        <strong>🎯 Instructions:</strong><br>
+        • If you see green borders: Images loaded successfully!<br>
+        • If you see red borders: Images failed to load<br>
+        • If you see orange borders: Images are still loading<br>
+        • Save this file and open it directly in your mobile browser
+    </div>
+
+    <script>
+        let loadedCount = 0;
+        let errorCount = 0;
+        const totalImages = 3;
+
+        function imageLoaded(id) {
+            loadedCount++;
+            document.getElementById('img' + id).classList.add('success');
+            updateStatus();
+            console.log(`✅ Image ${id} loaded successfully`);
+        }
+
+        function imageError(id) {
+            errorCount++;
+            document.getElementById('img' + id).classList.add('error');
+            updateStatus();
+            console.error(`❌ Image ${id} failed to load`);
+        }
+
+        function updateStatus() {
+            const status = document.getElementById('status');
+            if (loadedCount === totalImages) {
+                status.textContent = '✅ All images loaded successfully!';
+                status.className = 'status success';
+            } else if (errorCount > 0) {
+                status.textContent = `❌ ${errorCount} images failed, ${loadedCount} loaded`;
+                status.className = 'status error';
+            } else {
+                status.textContent = `⏳ ${loadedCount}/${totalImages} images loaded...`;
+                status.className = 'status loading';
+            }
+        }
+
+        // Device info
+        document.getElementById('ua').textContent = navigator.userAgent;
+        document.getElementById('screen').textContent = window.innerWidth + 'x' + window.innerHeight;
+        document.getElementById('online').textContent = navigator.onLine ? 'Online' : 'Offline';
+        document.getElementById('touch').textContent = 'ontouchstart' in window ? 'Yes' : 'No';
+
+        // Timeout check
+        setTimeout(() => {
+            if (loadedCount === 0) {
+                document.getElementById('status').innerHTML = '❌ No images loaded after 10 seconds. Check your device settings.';
+                document.getElementById('status').className = 'status error';
+            }
+        }, 10000);
+    </script>
+</body>
+</html>
