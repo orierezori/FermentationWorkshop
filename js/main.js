@@ -10,19 +10,6 @@ const observer = new IntersectionObserver((entries) => {
 // Observe fade-up elements
 document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
 
-// Basic image error handling
-document.querySelectorAll('img').forEach(img => {
-    img.addEventListener('error', function() {
-        console.warn(`Image failed to load: ${this.src}`);
-        this.style.border = '2px solid #f44336';
-        this.style.backgroundColor = '#ffebee';
-    });
-
-    img.addEventListener('load', function() {
-        console.log(`Image loaded: ${this.src}`);
-    });
-});
-
 // Language Switcher & CTA
 const langToggleButton = document.getElementById('lang-toggle-btn');
 const ctaButton = document.querySelector('.navbar a.cta'); // Get the CTA button

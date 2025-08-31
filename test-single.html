@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Image Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            border: 5px solid #ff6f00;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .success {
+            border-color: green !important;
+        }
+        .error {
+            border-color: red !important;
+        }
+        .info {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Single Image Test</h1>
+    <div class="info">
+        <strong>Browser Info:</strong><br>
+        User Agent: <span id="ua"></span><br>
+        Online: <span id="online"></span><br>
+        Screen: <span id="screen"></span>
+    </div>
+
+    <h2>Image Test:</h2>
+    <img src="workshop1.jpeg?v=3" alt="Test Image" id="testImg" />
+
+    <div class="info">
+        <strong>Result:</strong> <span id="result">Loading...</span>
+    </div>
+
+    <script>
+        // Update browser info
+        document.getElementById('ua').textContent = navigator.userAgent;
+        document.getElementById('online').textContent = navigator.onLine ? 'Yes' : 'No';
+        document.getElementById('screen').textContent = window.innerWidth + 'x' + window.innerHeight;
+
+        const img = document.getElementById('testImg');
+        const result = document.getElementById('result');
+
+        img.addEventListener('load', function() {
+            this.classList.add('success');
+            result.textContent = '✅ Image loaded successfully!';
+            result.style.color = 'green';
+            console.log('✅ Image loaded:', this.src);
+        });
+
+        img.addEventListener('error', function() {
+            this.classList.add('error');
+            result.textContent = '❌ Image failed to load';
+            result.style.color = 'red';
+            console.error('❌ Image failed:', this.src);
+        });
+
+        // Timeout check
+        setTimeout(() => {
+            if (!img.complete) {
+                result.textContent = '⏳ Image still loading after 5 seconds...';
+                result.style.color = 'orange';
+            }
+        }, 5000);
+    </script>
+</body>
+</html>

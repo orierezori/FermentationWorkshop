@@ -304,6 +304,10 @@ html[dir="ltr"] h2.section-title::after { left: 0; }
     height: auto;
     /* Prevent layout shift during loading */
     background-color: #f5f5f5;
+    /* Debug: Make images clearly visible */
+    border: 3px solid #ff6f00;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 /* ---------- צור קשר ---------- */
