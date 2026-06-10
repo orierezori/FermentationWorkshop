@@ -208,54 +208,6 @@ html[dir="ltr"] h2.section-title::after { left: 0; }
     font-weight: 700;
 }
 
-/* ---------- תאריכים ---------- */
-.dates ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: .75rem;
-    align-items: flex-start; /* Keep this */
-    justify-content: center; /* Center items on mobile */
-}
-.dates li {
-    background: var(--primary-600);
-    color: #fff;
-    padding: .55rem 1rem;
-    border-radius: 9999px;
-    font-weight: 500;
-    box-shadow: 0 3px 8px rgba(0,0,0,.15);
-    min-width: 240px; /* Adjusted min-width for mobile */
-    max-width: 100%; /* Allow full width if needed */
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    box-sizing: border-box; /* Keep this */
-    /* Touch target improvements already good */
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-}
-.dates li:focus, .dates li:hover {
-  background: var(--accent-500);
-  color: #fff;
-  box-shadow: 0 4px 16px rgba(255,143,0,0.15);
-}
-.dates li[aria-disabled="true"] {
-  cursor: not-allowed;
-  opacity: 0.6;
-  pointer-events: none;
-}
-.dates li > span[data-lang] {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5em;
-}
-
 /* ---------- Pricing ---------- */
 .pricing {
     display: grid;
@@ -486,13 +438,6 @@ a:focus, button:focus, [tabindex]:not([tabindex="-1"]):focus { /* Specificity fo
         inset-inline-end: 1.2rem; /* Desktop default */
     }
     
-    .dates ul {
-        justify-content: flex-start; /* Align to start on larger screens */
-    }
-    .dates li {
-        min-width: 260px; /* Restore original min-width */
-    }
-
     .pricing {
         gap: 1.5rem; /* Desktop default */
         grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); /* Desktop default */

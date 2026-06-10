@@ -31,6 +31,18 @@ try {
     revealFadeUpSectionsImmediately();
 }
 
+const currentYear = String(new Date().getFullYear());
+const footerYearHe = document.getElementById('footer-year-he');
+const footerYearEn = document.getElementById('footer-year-en');
+
+if (footerYearHe) {
+    footerYearHe.textContent = currentYear;
+}
+
+if (footerYearEn) {
+    footerYearEn.textContent = currentYear;
+}
+
 // Language Switcher & CTA
 const langToggleButton = document.getElementById('lang-toggle-btn');
 const ctaButton = document.querySelector('.navbar a.cta'); // Get the CTA button
@@ -118,46 +130,6 @@ if (langToggleButton) {
 
 const preferredLang = localStorage.getItem('preferredLang') || 'he';
 setLanguage(preferredLang); 
-
-// Add click and keyboard event to date list items using event delegation
-const dateList = document.querySelector('#dates ul');
-dateList.addEventListener('click', function(e) {
-    let li = e.target.closest('li');
-    if (!li || li.getAttribute('aria-disabled') === 'true') return;
-    // Get the Hebrew date text, excluding the tag
-    const heSpan = li.querySelector('span[data-lang="he"]');
-    let dateText = '';
-    heSpan.childNodes.forEach(node => {
-        if (node.nodeType === Node.TEXT_NODE) {
-            dateText += node.textContent.trim();
-        }
-    });
-    dateText = dateText.replace(/\s+/g, ' ').trim();
-    const message = encodeURIComponent(`היי, אני מעוניין.ת להירשם לסדנה בתאריך ${dateText}`);
-    const waUrl = `https://wa.me/31611675802?text=${message}`;
-    window.open(waUrl, '_blank');
-});
-dateList.addEventListener('keydown', function(e) {
-    let li = e.target.closest('li');
-    if (!li || li.getAttribute('aria-disabled') === 'true') return;
-    if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        li.click();
-    }
-});
-// Set aria-disabled and tabindex for full workshops
-const dateListItems = document.querySelectorAll('#dates ul li');
-dateListItems.forEach(li => {
-    if (li.querySelector('.workshop-full-tag')) {
-        li.setAttribute('aria-disabled', 'true');
-        li.tabIndex = -1;
-        li.style.cursor = 'not-allowed';
-    } else {
-        li.setAttribute('aria-disabled', 'false');
-        li.tabIndex = 0;
-        li.style.cursor = 'pointer';
-    }
-});
 
 // Cancellation Policy Modal Logic
 const modal = document.getElementById('cancellation-policy-modal');
