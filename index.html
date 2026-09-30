@@ -4,12 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>סדנת מותססים – חמוצים מותססים בבית</title>
-  <meta name="theme-color" content="#2e7d32" />
+  <meta name="theme-color" content="#ffffff" />
   <link rel="manifest" href="/manifest.json">
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&family=Varela+Round&display=swap" rel="stylesheet" />
   <!-- Custom Styles -->
-  <link rel="stylesheet" href="css/style.css?v=9">
+  <link rel="stylesheet" href="css/style.css?v=10">
   <link rel="icon" type="image/jpeg" href="workshop1.jpeg">
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
@@ -27,24 +26,36 @@
   <link rel="apple-touch-icon" href="workshop1.jpeg">
 </head>
 <body>
-  <a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
+  <a href="#main-content" class="skip-link"><span data-lang="he">דלג לתוכן הראשי</span><span data-lang="en" style="display:none;">Skip to main content</span></a>
   <!-- ניווט -->
   <nav class="navbar" aria-label="Main navigation">
-    <span class="brand">
+    <a class="brand" href="#top">
       <img src="logo_mutsasim.png" alt="Mutsasim Vegetable Fermentation Workshop Logo" class="navbar-logo" />
       <span data-lang="he">סדנת מותססים</span>
       <span data-lang="en" style="display:none;">Fermentation Workshop</span>
-    </span>
+    </a>
+    <div class="nav-links">
+      <a href="#about"><span data-lang="he">הסדנה</span><span data-lang="en" style="display:none;">Workshop</span></a>
+      <a href="#pricing"><span data-lang="he">מחירים</span><span data-lang="en" style="display:none;">Pricing</span></a>
+      <a href="#gallery"><span data-lang="he">גלריה</span><span data-lang="en" style="display:none;">Gallery</span></a>
+      <a href="#contact"><span data-lang="he">יצירת קשר</span><span data-lang="en" style="display:none;">Contact</span></a>
+    </div>
     <span class="lang-switcher">
       <a href="#" id="lang-toggle-btn" title="Switch language" aria-label="Switch language" tabindex="0"></a>
     </span>
   </nav>
   <!-- Hero -->
-  <header class="hero" role="banner">
-    <h1>
-      <span data-lang="he">סדנת מותססים <br> חמוצים פרוביוטים טעימים ובריאים</span>
-      <span data-lang="en" style="display:none;">Fermentation Workshop <br> Craft Delicious & Healthy Probiotic Pickles</span>
-    </h1>
+  <header class="hero" role="banner" id="top">
+    <div class="hero-copy">
+      <p class="hero-kicker"><span data-lang="he">סדנה מעשית באמסטלפיין</span><span data-lang="en" style="display:none;">Hands-on workshop in Amstelveen</span></p>
+      <h1>
+        <span data-lang="he">הגיע הזמן<br>להכניס <em>חיים</em><br>לצנצנת.</span>
+        <span data-lang="en" style="display:none;">Bring your<br>pickles <em>to life.</em></span>
+      </h1>
+      <p class="hero-intro"><span data-lang="he">לומדים להכין חמוצים פרוביוטיים טעימים ובריאים בבית.</span><span data-lang="en" style="display:none;">Learn to make delicious, probiotic-rich pickles at home.</span></p>
+      <a class="hero-cta" href="#pricing"><span data-lang="he">לסוגי הסדנאות</span><span data-lang="en" style="display:none;">Explore workshops</span><span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="hero-image"><img src="workshop1.jpeg" alt-he="צנצנות חמוצים צבעוניות" alt-en="Colorful jars of fermented vegetables" alt="צנצנות חמוצים צבעוניות"></div>
   </header>
   <main class="container" id="main-content" tabindex="-1">
     <!-- פירוט -->
@@ -89,10 +100,10 @@
     </section>
     <!-- Pricing -->
     <section id="pricing" class="pricing fade-up" aria-labelledby="pricing-title">
-      <h3 class="visually-hidden" id="pricing-title">מחירים</h3>
+      <h2 class="section-title" id="pricing-title"><span data-lang="he">בחרו את הסדנה שלכם</span><span data-lang="en" style="display:none;">Choose your workshop</span></h2>
       <div class="price-card">
         <h3>
-          <span data-lang="he">סדנדת בוקר קבוצתית</span>
+          <span data-lang="he">סדנת בוקר קבוצתית</span>
           <span data-lang="en" style="display:none;">Group Morning Workshop</span>
         </h3>
         <p class="price">€50</p>
@@ -108,8 +119,8 @@
         </h3>
         <p class="price">€65</p>
         <p>
-          <span data-lang="he">למשתתף (עד 8 אנשים בסדנה)</span>
-          <span data-lang="en" style="display:none;">Per participant (up to 8 people per workshop)</span>
+          <span data-lang="he">למשתתף (מינימום 8 משתתפים בסדנה)</span>
+          <span data-lang="en" style="display:none;">Per participant (minimum 8 participants per workshop)</span>
         </p>
       </div>
       <div class="price-card">
@@ -169,7 +180,7 @@
       </p>
     </section>
   </main>
-  <footer style="text-align:center; padding:1.5rem 0; color:#888; font-size:0.95rem;">
+  <footer class="site-footer">
     <span data-lang="he">© <span id="footer-year-he"></span> סדנת מותססים. כל הזכויות שמורות.</span>
     <span data-lang="en" style="display:none;">© <span id="footer-year-en"></span> Fermentation Workshop. All rights reserved.</span>
     <span class="footer-links-container">

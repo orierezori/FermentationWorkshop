@@ -43,12 +43,11 @@ if (footerYearEn) {
     footerYearEn.textContent = currentYear;
 }
 
-// Language Switcher & CTA
+// Language switcher
 const langToggleButton = document.getElementById('lang-toggle-btn');
-const ctaButton = document.querySelector('.navbar a.cta'); // Get the CTA button
 const translatableElements = document.querySelectorAll('[data-lang]');
 const htmlElement = document.documentElement;
-const galleryImages = document.querySelectorAll('.gallery-grid img');
+const galleryImages = document.querySelectorAll('.gallery-grid img, .hero-image img');
 
 function setLanguage(lang) {
     htmlElement.lang = lang;
@@ -97,15 +96,6 @@ function setLanguage(lang) {
         langToggleButton.dataset.langSwitch = 'he';
         langToggleButton.title = 'Switch to Hebrew';
         langToggleButton.setAttribute('aria-label', 'Switch to Hebrew');
-    }
-    }
-
-    // Show/hide CTA button based on language
-    if (ctaButton) {
-    if (lang === 'en') {
-        ctaButton.classList.add('hidden-lang');
-    } else { // lang === 'he'
-        ctaButton.classList.remove('hidden-lang');
     }
     }
 
