@@ -8,6 +8,7 @@
   --page: 1380px;
 }
 * { box-sizing: border-box; }
+img { max-width: 100%; }
 html { scroll-behavior: smooth; scroll-padding-top: 116px; }
 body {
   margin: 0;
@@ -70,7 +71,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--pink); outline-
   flex: none;
   width: 48px;
   height: 48px;
-  object-fit: cover;
+  object-fit: contain;
   border: 2px solid var(--ink);
   transform: rotate(-5deg);
 }
@@ -203,8 +204,9 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--pink); outline-
 .hero-image img {
   display: block;
   width: 100%;
-  aspect-ratio: 1 / .92;
-  object-fit: cover;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
 }
 .container { max-width: var(--page); margin: auto; }
 .container > section {
@@ -237,7 +239,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--pink); outline-
   transform: rotate(-4deg);
 }
 .about-image::before { background: rgba(255,0,110,.55); transform: translateX(-50%) rotate(7deg); }
-.about-image img { display: block; width: 100%; aspect-ratio: 1 / 1.05; object-fit: cover; }
+.about-image img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; }
 .highlights ul {
   display: grid;
   gap: 18px;
@@ -317,7 +319,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--pink); outline-
 .gallery-item:nth-child(4n+3) { transform: rotate(-1.5deg); }
 .gallery-item:nth-child(4n) { transform: rotate(3deg); }
 .gallery-item:last-child { grid-column: 1 / -1; }
-.gallery-item img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.gallery-item img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; }
 .gallery-item::after { inset: auto 6px 18px 6px; }
 .contact {
   background: var(--ink);
