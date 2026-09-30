@@ -47,11 +47,15 @@ if (footerYearEn) {
 const langToggleButton = document.getElementById('lang-toggle-btn');
 const translatableElements = document.querySelectorAll('[data-lang]');
 const htmlElement = document.documentElement;
-const galleryImages = document.querySelectorAll('.gallery-grid img, .hero-image img');
+const mainNavigation = document.querySelector('.navbar');
+const localizedImages = document.querySelectorAll('.gallery-grid img, .hero-image img, .about-image img');
 
 function setLanguage(lang) {
     htmlElement.lang = lang;
     htmlElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+    if (mainNavigation) {
+        mainNavigation.setAttribute('aria-label', lang === 'he' ? 'ניווט ראשי' : 'Main navigation');
+    }
 
     // Set the document title based on language
     if (lang === 'he') {
@@ -68,7 +72,7 @@ function setLanguage(lang) {
     }
     });
     
-    galleryImages.forEach(img => {
+    localizedImages.forEach(img => {
     const altHe = img.getAttribute('alt-he');
     const altEn = img.getAttribute('alt-en');
     if (lang === 'he' && altHe) {
