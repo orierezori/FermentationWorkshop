@@ -43,19 +43,16 @@ if (footerYearEn) {
     footerYearEn.textContent = currentYear;
 }
 
-// Language switcher
+// Language Switcher & CTA
 const langToggleButton = document.getElementById('lang-toggle-btn');
+const ctaButton = document.querySelector('.navbar a.cta'); // Get the CTA button
 const translatableElements = document.querySelectorAll('[data-lang]');
 const htmlElement = document.documentElement;
-const mainNavigation = document.querySelector('.navbar');
-const localizedImages = document.querySelectorAll('.gallery-grid img, .hero-image img, .about-image img');
+const galleryImages = document.querySelectorAll('.gallery-grid img');
 
 function setLanguage(lang) {
     htmlElement.lang = lang;
     htmlElement.dir = lang === 'he' ? 'rtl' : 'ltr';
-    if (mainNavigation) {
-        mainNavigation.setAttribute('aria-label', lang === 'he' ? 'ניווט ראשי' : 'Main navigation');
-    }
 
     // Set the document title based on language
     if (lang === 'he') {
@@ -72,7 +69,7 @@ function setLanguage(lang) {
     }
     });
     
-    localizedImages.forEach(img => {
+    galleryImages.forEach(img => {
     const altHe = img.getAttribute('alt-he');
     const altEn = img.getAttribute('alt-en');
     if (lang === 'he' && altHe) {
@@ -100,6 +97,15 @@ function setLanguage(lang) {
         langToggleButton.dataset.langSwitch = 'he';
         langToggleButton.title = 'Switch to Hebrew';
         langToggleButton.setAttribute('aria-label', 'Switch to Hebrew');
+    }
+    }
+
+    // Show/hide CTA button based on language
+    if (ctaButton) {
+    if (lang === 'en') {
+        ctaButton.classList.add('hidden-lang');
+    } else { // lang === 'he'
+        ctaButton.classList.remove('hidden-lang');
     }
     }
 

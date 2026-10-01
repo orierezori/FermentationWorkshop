@@ -3,19 +3,19 @@
   "short_name": "מותססים",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#E8DCC7",
-  "theme_color": "#E8DCC7",
+  "background_color": "#fafafa",
+  "theme_color": "#2e7d32",
   "description": "הצטרפו לסדנה חווייתית ולימדו להכין חמוצים פרוביוטיים צבעוניים ובריאים בבית!",
   "icons": [
     {
-      "src": "assets/enhanced/icon-192.png",
+      "src": "workshop1.jpeg",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/jpeg"
     },
     {
-      "src": "assets/enhanced/icon-512.png",
+      "src": "workshop1.jpeg",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/jpeg"
     }
   ]
-}
+} 
